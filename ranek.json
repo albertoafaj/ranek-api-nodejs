@@ -1,0 +1,209 @@
+{
+  "transaction": [
+    {
+      "buyer_id": "ranek@ranek.com",
+      "product": {
+        "id": "notebook",
+        "name": "Notebook",
+        "user_id": "ranek@ranek.com",
+        "price": "4999",
+        "sold": "false",
+        "description": "Esse é um novo notebook.",
+        "photos": null
+      },
+      "adress": {
+        "street": "Rua Ali perto",
+        "number": "1200",
+        "city": "Camaçari",
+        "state": "BA",
+        "zipCode": "12345678",
+        "district": "Arembepe"
+      },
+      "id": 1
+    },
+    {
+      "buyer_id": "erica@ranek.com",
+      "product": {
+        "id": "notebook",
+        "name": "Notebook",
+        "user_id": "ranek@ranek.com",
+        "price": "4999",
+        "sold": "false",
+        "description": "Esse é um novo notebook.",
+        "photos": null
+      },
+      "adress": {
+        "street": "412",
+        "number": "9981",
+        "zipCode": "42810240"
+      },
+      "id": 2
+    }
+  ],
+  "user": [
+    {
+      "id": "ranek@ranek.com",
+      "name": "Ranek",
+      "email": "ranek@ranek.com",
+      "password": "123456",
+      "street": "Rua Ali perto",
+      "number": "1200",
+      "city": "Camaçari",
+      "state": "BA",
+      "zipCode": "12345678",
+      "district": "Arembepe"
+    },
+    {
+      "id": "alberto@ranek.com",
+      "email": "alberto@ranek.com",
+      "name": "Alberto",
+      "password": "123456",
+      "district": "Ranek",
+      "street": "Rua Ali perto",
+      "number": "12",
+      "city": "Salvador",
+      "state": "BA",
+      "zipCode": "12345678"
+    },
+    {
+      "id": "albertoafaj@hotmail.com",
+      "name": "Erica Miura",
+      "email": "albertoafaj@hotmail.com",
+      "password": "sdasdad",
+      "street": "Rodovia BA-099",
+      "number": "9981",
+      "city": "Camaçari",
+      "state": "BA",
+      "zipCode": "42829710",
+      "district": "Arembepe (Abrantes)"
+    },
+    {
+      "id": "teste@ranek.com",
+      "name": "teste",
+      "email": "teste@ranek.com",
+      "password": "",
+      "street": "Rodovia BA-099",
+      "number": "0002",
+      "city": "Camaçari",
+      "state": "BA",
+      "zipCode": "42829710",
+      "district": "Arembepe (Abrantes)"
+    },
+    {
+      "id": "teste@email.com",
+      "name": "Teste",
+      "email": "teste@email.com",
+      "password": "123",
+      "street": "Rodovia BA-099",
+      "number": "0002",
+      "city": "Camaçari",
+      "state": "BA",
+      "zipCode": "42829710",
+      "district": "Arembepe (Abrantes)"
+    },
+    {
+      "id": "teste2@email.com",
+      "name": "Teste2",
+      "email": "teste2@email.com",
+      "password": "123",
+      "street": "Rodovia BA-099",
+      "number": "0002",
+      "city": "Camaçari",
+      "state": "BA",
+      "zipCode": "42829710",
+      "district": "Arembepe (Abrantes)"
+    },
+    {
+      "id": "erica@ranek.com",
+      "name": "Erica Miura",
+      "email": "erica@ranek.com",
+      "password": "123456",
+      "street": "412",
+      "number": "9981",
+      "zipCode": "42810240"
+    }
+  ],
+  "product": [
+    {
+      "id": "notebook",
+      "name": "Notebook",
+      "user_id": "ranek@ranek.com",
+      "price": "4999",
+      "sold": "false",
+      "description": "Esse é um novo notebook.",
+      "photos": null
+    },
+    {
+      "id": "smartphone",
+      "name": "Smartphone",
+      "user_id": "ranek@ranek.com",
+      "price": "2999",
+      "sold": "false",
+      "description": "Esse é um novo smartphone.",
+      "photos": null
+    },
+    {
+      "id": "table",
+      "name": "Tablet",
+      "user_id": "user@ranek.com",
+      "price": "1499",
+      "sold": "false",
+      "description": "Esse é um novo tablet.",
+      "photos": null
+    },
+    {
+      "id": "notebook",
+      "name": "Notebook",
+      "user_id": "user@ranek.com",
+      "price": "4999",
+      "sold": "false",
+      "description": "Esse é um novo notebook.",
+      "photos": null
+    },
+    {
+      "id": "smartphone",
+      "name": "Smartphone",
+      "user_id": "user@ranek.com",
+      "price": "2999",
+      "sold": "false",
+      "description": "Esse é um novo smartphone.",
+      "photos": null
+    },
+    {
+      "id": "table",
+      "name": "Tablet",
+      "user_id": "user@ranek.com",
+      "price": "1499",
+      "sold": "false",
+      "description": "Esse é um novo tablet.",
+      "photos": null
+    },
+    {
+      "id": "notebook",
+      "name": "Notebook",
+      "user_id": "user@ranek.com",
+      "price": "4999",
+      "sold": "false",
+      "description": "Esse é um novo notebook.",
+      "photos": null
+    },
+    {
+      "id": "smartphone",
+      "name": "Smartphone",
+      "user_id": "user@ranek.com",
+      "price": "2999",
+      "sold": "false",
+      "description": "Esse é um novo smartphone.",
+      "photos": null
+    },
+    {
+      "id": "table",
+      "name": "Tablet",
+      "user_id": "user@ranek.com",
+      "price": "1499",
+      "sold": "false",
+      "description": "Esse é um novo tablet.",
+      "photos": null
+    }
+  ]
+}
