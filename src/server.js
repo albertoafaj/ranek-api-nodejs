@@ -7,4 +7,6 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
-app.listen(port);
+app.listen(port, () => {
+  console.log(`Aplicação ativa na porta ${port}`);
+});
