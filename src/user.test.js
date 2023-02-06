@@ -14,6 +14,7 @@ test('Should insert a user with sucess', async () => {
     .send({
       name: 'Steve Rogers',
       email: 'captain@ranek.com',
+      password: '123',
     });
   expect(result.status).toBe(201);
   expect(result.body.name).toBe('Steve Rogers');
