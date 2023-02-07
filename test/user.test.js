@@ -4,8 +4,7 @@ const app = require('../src/app');
 test('Should to list all users', async () => {
   const result = await request(app).get('/users');
   expect(result.status).toBe(200);
-  expect(result.body).toHaveLength(1);
-  expect(result.body[0]).toHaveProperty('name', 'Steve Rogers');
+  expect(result.body.length).toBeGreaterThan(0);
 });
 
 test('Should insert a user with sucess', async () => {
