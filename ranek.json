@@ -42,7 +42,7 @@
   ],
   "user": [
     {
-      "id": "ranek@ranek.com",
+      "id": 1,
       "name": "Ranek",
       "email": "ranek@ranek.com",
       "password": "123456",
