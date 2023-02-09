@@ -19,6 +19,13 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
+app.use((err, req, res, next) => {
+  const { name, message, stack } = err;
+  if (name === 'ValidationError') res.status(400).json({ error: message });
+  res.status(500).json({ name, message, stack });
+  next(err);
+});
+
 // eslint-disable-next-line no-shadow
 
 // LOGGER
