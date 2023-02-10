@@ -1,4 +1,5 @@
 const request = require('supertest');
+
 const app = require('../src/app');
 
 const email = `${Date.now()}@ranek.com`;
@@ -19,6 +20,20 @@ test('Should insert a user with sucess', async () => {
     });
   expect(result.status).toBe(201);
   expect(result.body.name).toBe('Steve Rogers');
+  expect(result.body).not.toHaveProperty('password');
+});
+test('should insert a crypt password', async () => {
+  const result = await request(app)
+    .post('/users')
+    .send({
+      name: 'Steve Rogers',
+      email: `${Date.now()}@ranek.com`,
+      password: '123',
+    });
+  expect(result.status).toBe(201);
+  const userDB = await app.services.user.findOne(result.body);
+  expect(userDB.password).not.toBeUndefined();
+  expect(userDB.password).not.toBe('123');
 });
 
 test('should not insert user without name', async () => {

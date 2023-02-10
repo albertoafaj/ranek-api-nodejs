@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint src/** test/** --fix",
-    "secure-mode": "jest --watch --verbose=true"
+    "secure-mode": "set NODE_ENV=test&& jest --watch --verbose=true"
   },
   "author": "Albertto Fernandes de Araújo Junior",
   "license": "ISC",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "a": "^3.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
     "consign": "^0.1.6",
     "dotenv": "^16.0.3",
