@@ -18,5 +18,14 @@ module.exports = (app) => {
     }
   };
 
-  return { findAll, create };
+  const update = async (req, res, next) => {
+    try {
+      const result = await app.services.user.update(req.params.id, req.body);
+      return res.status(200).json(result[0]);
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  return { findAll, create, update };
 };
