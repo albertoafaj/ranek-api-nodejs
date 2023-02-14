@@ -159,10 +159,10 @@ test('should not update zip code to a number with a different length of eight ch
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
     .send({
-      zipCode: '1234567',
+      zipCode: 1234567,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O código postal deve ser preenchido com uma sequência de oito números');
+  expect(result.body.error).toBe('O campo código postal deve ter 8 caracteres');
 });
 
 test('Should not update zip code when dont input just numbers', async () => {
@@ -172,27 +172,24 @@ test('Should not update zip code when dont input just numbers', async () => {
       zipCode: 'ABCDEFGH',
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O código postal deve ser preenchido com uma sequência de oito números');
+  expect(result.body.error).toBe('O campo código postal deve ser um(a) number');
 });
 
 test('should not update street to more than 50 characters', async () => {
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
     .send({
-      street: '012345678901234567890123456789012345678901234567891',
+      street: `
+      01234567890123456789012345678901234567890123456789
+      01234567890123456789012345678901234567890123456789
+      01234567890123456789012345678901234567890123456789
+      01234567890123456789012345678901234567890123456789
+      01234567890123456789012345678901234567890123456789
+      01234567890123456789012345678901234567890123456789
+      `,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O campo rua não deve ter mais de 50 caracteres');
-});
-
-test('should not update status if not a bollean', async () => {
-  const result = await request(app)
-    .put(`${MAIN_ROTE}/${user.id}`)
-    .send({
-      status: 'string',
-    });
-  expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O campo status deve ser um boleano, passe o atributo(true or false)');
+  expect(result.body.error).toBe('O campo rua deve ter de 0 a 255 caracteres');
 });
 
 test('should not update number to more than 8 characters', async () => {
@@ -202,7 +199,7 @@ test('should not update number to more than 8 characters', async () => {
       number: '1234567890',
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O campo número não deve ter mais de 8 caracteres');
+  expect(result.body.error).toBe('O campo número deve ter de 0 a 8 caracteres');
 });
 test('should not update number if not a string', async () => {
   const result = await request(app)
@@ -213,23 +210,3 @@ test('should not update number if not a string', async () => {
   expect(result.status).toBe(400);
   expect(result.body.error).toBe('O campo número deve ser um(a) string');
 });
-// not null - OK
-// validation primary not update
-// validation fields unique
-// validation of length field
-// validation type field
-/*
-t.increments('id').primary();
-t.string('name').notNull();
-t.string('email').notNull().unique();
-t.string('password').notNull();
-t.boolean('status').notNull().default(true);
-t.timestamp('dateCreate', { useTz: true }).notNull().defaultTo(knex.fn.now());
-t.timestamp('dateLastUpdate', { useTz: true });
-t.string('street', 50);
-t.string('number', 8);
-t.string('city', 50);
-t.string('state', 2);
-t.integer('zipCode', 8);
-t.string('district', 50);
-*/

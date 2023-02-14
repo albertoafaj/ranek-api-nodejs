@@ -10,103 +10,149 @@ module.exports = (app) => {
   // TODO create timestamp method in Helpers ;
 
   const userResponseFields = ['id', 'name', 'email', 'zipCode', 'street', 'number', 'city', 'state', 'district', 'status', 'dateCreate', 'dateLastUpdate'];
-  const fieldNameTranslation = {
-    id: 'id',
-    name: 'nome',
-    email: 'email',
-    password: 'senha',
-    zipCode: 'código postal',
-    street: 'rua',
-    number: 'número',
-    city: 'cidade',
-    state: 'estado',
-    district: 'bairro',
-    status: 'status',
-    dateCreate: 'data de criação',
-    dateLastUpdate: 'data de atualização',
-  };
 
-  // TODO create user validation rules
-  /* const users = {
+  // TODO Transfer getTimestamp for Helpers;
+  const users = {
     id: {
       translation_pt: 'id',
-      fieldLength: 2147483647,
+      minFieldLength: 0,
+      maxFieldLength: 2147483647,
       fieldType: 'number',
+      isUnique: true,
       returnValue: true,
     },
     name: {
       translation_pt: 'nome',
-      fieldLength: 255,
+      minFieldLength: 0,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     email: {
       translation_pt: 'email',
-      fieldLength: 255,
+      minFieldLength: 0,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: true,
       returnValue: true,
     },
     password: {
       translation_pt: 'senha',
-      fieldLength: 255,
+      minFieldLength: 6,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: false,
       returnValue: false,
     },
     zipCode: {
       translation_pt: 'código postal',
-      fieldLength: 8,
+      minFieldLength: 8,
+      maxFieldLength: 8,
       fieldType: 'number',
+      isUnique: false,
       returnValue: true,
     },
     street: {
       translation_pt: 'rua',
-      fieldLength: 255,
+      minFieldLength: 0,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     number: {
       translation_pt: 'número',
-      fieldLength: 8,
+      minFieldLength: 0,
+      maxFieldLength: 8,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     city: {
       translation_pt: 'cidade',
-      fieldLength: 50,
+      minFieldLength: 0,
+      maxFieldLength: 50,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     state: {
       translation_pt: 'estado',
-      fieldLength: 2,
-      fieldType: 'boolean',
+      minFieldLength: 2,
+      maxFieldLength: 2,
+      fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     district: {
       translation_pt: 'bairro',
-      fieldLength: 50,
+      minFieldLength: 0,
+      maxFieldLength: 50,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     status: {
       translation_pt: 'status',
-      fieldLength: 5,
+      minFieldLength: 0,
+      maxFieldLength: 5,
       fieldType: 'bollean',
+      isUnique: false,
       returnValue: true,
     },
     dateCreate: {
       translation_pt: 'data de criação',
-      fieldLength: 255,
+      minFieldLength: 0,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
     dateLastUpdate: {
       translation_pt: 'data de atualização',
-      fieldLength: 255,
+      minFieldLength: 0,
+      maxFieldLength: 255,
       fieldType: 'string',
+      isUnique: false,
       returnValue: true,
     },
-  }; */
+  };
+
+  const getUserFields = (field) => {
+    let translated;
+    // eslint-disable-next-line array-callback-return
+    Object.entries(users).filter(([key, value]) => {
+      if (key === field) { translated = value; }
+    });
+    return translated;
+  };
+
+  const validation = (user) => {
+    Object.entries(user).forEach(([key, value]) => {
+      const userFields = getUserFields(key);
+      if (value === null) throw new ValidationError(`O campo ${userFields.translation_pt} é um atributo obrigatório`);
+      const fieldLength = value.toString().length;
+      if (
+        (value)
+        && (userFields.isUnique === true)
+      ) throw new ValidationError(`O campo ${userFields.translation_pt} não pode ser alterado`);
+      if (
+        (value)
+        // eslint-disable-next-line valid-typeof
+        && (typeof value !== userFields.fieldType)
+      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ser um(a) ${userFields.fieldType}`);
+      if (
+        (value)
+        && (userFields.minFieldLength === userFields.maxFieldLength)
+        && fieldLength !== userFields.maxFieldLength
+      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ter ${userFields.maxFieldLength} caracteres`);
+      if (
+        (value)
+        && (fieldLength < userFields.minFieldLength || fieldLength > userFields.maxFieldLength)
+      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ter de ${userFields.minFieldLength} a ${userFields.maxFieldLength} caracteres`);
+    });
+  };
 
   // TODO Transfer getTimestamp for Helpers;
   const getTimestamp = () => {
@@ -120,14 +166,6 @@ module.exports = (app) => {
     const ss = isLessThanTen(today.getSeconds());
     const tz = today.getTimezoneOffset() / 60;
     return `${yy}-${mm}-${dd} ${hh}:${ms}:${ss} ${(tz < 0) ? `-${tz}` : `+${tz}`}:00`;
-  };
-
-  const translateField = (field) => {
-    let translated;
-    Object.entries(fieldNameTranslation).filter(([key, value]) => {
-      if (key === field) { translated = value; }
-    });
-    return translated;
   };
 
   const findAll = () => app.db('users').select(userResponseFields);
@@ -145,23 +183,12 @@ module.exports = (app) => {
     userData.password = getPasswordHash(userData.password);
     return app.db('users').insert(userData, userResponseFields);
   };
-  // TODO recfator validation of length fields
+
   const update = async (id, user) => {
     const userData = user;
-    Object.entries(user).forEach(([key, value]) => {
-      if (value === null) throw new ValidationError(`O campo ${translateField(key)} é um atributo obrigatório`);
-    });
     if (userData.password) userData.password = getPasswordHash(userData.password);
-    if (userData.id) throw new ValidationError('O campo id não pode ser alterado');
-    if (userData.email) throw new ValidationError('O campo email não pode ser alterado');
-    if ((userData.zipCode) && (userData.zipCode.toString().length !== 8)) throw new ValidationError('O código postal deve ser preenchido com uma sequência de oito números');
-    if ((userData.zipCode) && (typeof userData.zipCode !== 'number')) throw new ValidationError('O código postal deve ser preenchido com uma sequência de oito números');
-    if ((userData.street) && userData.street.toString().length > 50) throw new ValidationError('O campo rua não deve ter mais de 50 caracteres');
-    if ((userData.status) && typeof userData.status !== 'boolean') throw new ValidationError('O campo status deve ser um boleano, passe o atributo(true or false)');
-    if ((userData.number) && userData.number.toString().length > 8) throw new ValidationError('O campo número não deve ter mais de 8 caracteres');
-    if ((userData.number) && typeof userData.number !== 'string') throw new ValidationError('O campo número deve ser um(a) string');
+    validation(user);
     userData.dateLastUpdate = getTimestamp();
-
     return app.db('users').where({ id }).update(userData, userResponseFields);
   };
   return {
