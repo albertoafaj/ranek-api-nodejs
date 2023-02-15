@@ -97,7 +97,7 @@ module.exports = (app) => {
       translation_pt: 'status',
       minFieldLength: 0,
       maxFieldLength: 5,
-      fieldType: 'bollean',
+      fieldType: 'boolean',
       isUnique: false,
       returnValue: true,
     },
