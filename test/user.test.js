@@ -45,8 +45,6 @@ test('should insert a crypt password', async () => {
   expect(userDB.password).not.toBe('123');
 });
 
-// TODO not allow inserting fields other than (e-mail, password);
-
 test('should not insert user without email', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
