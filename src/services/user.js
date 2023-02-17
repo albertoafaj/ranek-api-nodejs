@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
+const getTimestamp = require('../utils/getTimeStamp');
 const ValidationError = require('../err/ValidationsError');
 
 module.exports = (app) => {
@@ -173,20 +174,6 @@ module.exports = (app) => {
         && (fieldLength < userFields.minFieldLength || fieldLength > userFields.maxFieldLength)
       ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ter de ${userFields.minFieldLength} a ${userFields.maxFieldLength} caracteres`);
     });
-  };
-
-  // TODO Transfer getTimestamp for Helpers;
-  const getTimestamp = () => {
-    const today = new Date();
-    const isLessThanTen = (num) => ((num < 10) ? `0${num}` : num);
-    const yy = today.getFullYear();
-    const mm = isLessThanTen(today.getMonth() + 1);
-    const dd = isLessThanTen(today.getDate());
-    const hh = isLessThanTen(today.getHours());
-    const ms = isLessThanTen(today.getMinutes());
-    const ss = isLessThanTen(today.getSeconds());
-    const tz = today.getTimezoneOffset() / 60;
-    return `${yy}-${mm}-${dd} ${hh}:${ms}:${ss} ${(tz < 0) ? `-${tz}` : `+${tz}`}:00`;
   };
 
   const findAll = () => app.db('users').select(userResponseFields);
