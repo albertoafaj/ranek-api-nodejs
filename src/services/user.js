@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const ValidationError = require('../err/ValidationsError');
@@ -7,11 +8,9 @@ module.exports = (app) => {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, salt);
   };
-  // TODO create timestamp method in Helpers ;
 
   const userResponseFields = ['id', 'name', 'email', 'zipCode', 'street', 'number', 'city', 'state', 'district', 'status', 'dateCreate', 'dateLastUpdate'];
 
-  // TODO Transfer getTimestamp for Helpers;
   const users = {
     id: {
       translation_pt: 'id',
@@ -19,6 +18,7 @@ module.exports = (app) => {
       maxFieldLength: 2147483647,
       fieldType: 'number',
       isUnique: true,
+      insertAtLogin: true,
       returnValue: true,
     },
     name: {
@@ -27,6 +27,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     email: {
@@ -35,6 +36,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: true,
+      insertAtLogin: true,
       returnValue: true,
     },
     password: {
@@ -43,6 +45,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: true,
       returnValue: false,
     },
     zipCode: {
@@ -51,6 +54,7 @@ module.exports = (app) => {
       maxFieldLength: 8,
       fieldType: 'number',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     street: {
@@ -59,6 +63,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     number: {
@@ -67,6 +72,7 @@ module.exports = (app) => {
       maxFieldLength: 8,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     city: {
@@ -75,6 +81,7 @@ module.exports = (app) => {
       maxFieldLength: 50,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     state: {
@@ -83,6 +90,7 @@ module.exports = (app) => {
       maxFieldLength: 2,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     district: {
@@ -91,6 +99,7 @@ module.exports = (app) => {
       maxFieldLength: 50,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
     status: {
@@ -99,6 +108,7 @@ module.exports = (app) => {
       maxFieldLength: 5,
       fieldType: 'boolean',
       isUnique: false,
+      insertAtLogin: true,
       returnValue: true,
     },
     dateCreate: {
@@ -107,6 +117,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: true,
       returnValue: true,
     },
     dateLastUpdate: {
@@ -115,6 +126,7 @@ module.exports = (app) => {
       maxFieldLength: 255,
       fieldType: 'string',
       isUnique: false,
+      insertAtLogin: false,
       returnValue: true,
     },
   };
@@ -127,6 +139,15 @@ module.exports = (app) => {
     });
     return translated;
   };
+
+  // TODO check the viability of email validation in the back end
+
+  /*   const validateEmail = (email) => {
+    const reg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      if (!reg.test(email)) {
+        throw ValidationError('Email invalido');
+      }
+    }; */
 
   const validation = (user) => {
     Object.entries(user).forEach(([key, value]) => {
@@ -174,12 +195,16 @@ module.exports = (app) => {
 
   const save = async (user) => {
     const userData = user;
-
-    if (!userData.name) throw new ValidationError('Nome é um atributo obrigatório');
-    if (!userData.email) throw new ValidationError('O e-mail é um atributo obrigatório');
-    if (!userData.password) throw new ValidationError('A senha é um atributo obrigatório');
+    // if (!userData.name) throw new ValidationError('Nome é um atributo obrigatório');
+    if (!userData.email) throw new ValidationError('O campo e-mail é um atributo obrigatório');
+    // validateEmail(userData.email);
+    if (!userData.password) throw new ValidationError('A campo senha é um atributo obrigatório');
     const userDB = await findOne(user);
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
+    Object.entries(userData).forEach(([key]) => {
+      const userField = getUserFields(key);
+      if (userField.insertAtLogin === false) throw new ValidationError(`O campo ${userField.translation_pt} não deve ser inserido nessa etapa`);
+    });
     userData.password = getPasswordHash(userData.password);
     return app.db('users').insert(userData, userResponseFields);
   };

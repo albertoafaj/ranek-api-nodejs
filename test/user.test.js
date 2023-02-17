@@ -7,22 +7,12 @@ let user;
 beforeAll(async () => {
   await app.db('users').del();
   const result = await app.services.user.save({
-    name: 'User#0',
     email: `${Date.now()}@ranek.com`,
     password: '123456',
-    status: true,
   });
   user = { ...result[0] };
   user.password = '123456';
 });
-
-const testTemplateUpdate = async (newData, errorMessage) => {
-  const result = await request(app)
-    .put(`${MAIN_ROTE}/${user.id}`)
-    .send({ ...newData });
-  expect(result.status).toBe(400);
-  expect(result.body.error).toBe(errorMessage);
-};
 
 test('Should to list all users', async () => {
   const result = await request(app).get('/users');
@@ -34,12 +24,10 @@ test('Should insert a user with sucess', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
     .send({
-      name: 'Steve Rogers',
       email: `${Date.now()}@ranek.com`,
       password: '123456',
     });
   expect(result.status).toBe(201);
-  expect(result.body.name).toBe('Steve Rogers');
   expect(result.body).not.toHaveProperty('password');
   expect(result.body.status).toBe(true);
   expect(result.body).toHaveProperty('dateCreate');
@@ -48,7 +36,6 @@ test('should insert a crypt password', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
     .send({
-      name: 'user#CRIPT',
       email: `${Date.now()}@ranek.com`,
       password: '123456',
     });
@@ -60,36 +47,35 @@ test('should insert a crypt password', async () => {
 
 // TODO not allow inserting fields other than (e-mail, password);
 
-test('should not insert user without name', async () => {
-  const result = await request(app)
-    .post(MAIN_ROTE)
-    .send({
-      email: user.email,
-      password: user.password,
-    });
-  expect(result.status).toBe(400);
-  expect(result.body.error).toBe('Nome é um atributo obrigatório');
-});
 test('should not insert user without email', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
     .send({
-      name: user.name,
       password: user.password,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('O e-mail é um atributo obrigatório');
+  expect(result.body.error).toBe('O campo e-mail é um atributo obrigatório');
 });
 
 test('should not insert user without password', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
     .send({
-      name: user.name,
       email: user.email,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('A senha é um atributo obrigatório');
+  expect(result.body.error).toBe('A campo senha é um atributo obrigatório');
+});
+
+test('should not insert user with null password', async () => {
+  const result = await request(app)
+    .post(MAIN_ROTE)
+    .send({
+      email: 'ranek@gmail.com',
+      password: null,
+    });
+  expect(result.status).toBe(400);
+  expect(result.body.error).toBe('A campo senha é um atributo obrigatório');
 });
 
 test('should not insert user with registered email', async () => {
@@ -100,10 +86,39 @@ test('should not insert user with registered email', async () => {
   expect(result.body.error).toBe('Já existe um usuário com este email');
 });
 
+const testTemplateInsert = async (newData, errorMessage) => {
+  const result = await request(app)
+    .post(MAIN_ROTE)
+    .send({ ...newData, email: `${Date.now()}@ranek.com`, password: user.password });
+  expect(result.status).toBe(400);
+  expect(result.body.error).toBe(errorMessage);
+};
+
+describe('when try to insert a users', () => {
+  test('Should not insert the name', () => testTemplateInsert({ name: 123 }, 'O campo nome não deve ser inserido nessa etapa'));
+  test('Should not insert the dateLastUpdate', () => testTemplateInsert({ dateLastUpdate: 123 }, 'O campo data de atualização não deve ser inserido nessa etapa'));
+  test('Should not insert the street', () => testTemplateInsert({ street: 123 }, 'O campo rua não deve ser inserido nessa etapa'));
+  test('Should not insert the number', () => testTemplateInsert({ number: 12 }, 'O campo número não deve ser inserido nessa etapa'));
+  test('Should not insert the city', () => testTemplateInsert({ city: 12 }, 'O campo cidade não deve ser inserido nessa etapa'));
+  test('Should not insert the state', () => testTemplateInsert({ state: 12 }, 'O campo estado não deve ser inserido nessa etapa'));
+  test('Should not insert the zipCode', () => testTemplateInsert({ zipCode: 'ABCDEFGH' }, 'O campo código postal não deve ser inserido nessa etapa'));
+  test('Should not insert the district', () => testTemplateInsert({ district: 12 }, 'O campo bairro não deve ser inserido nessa etapa'));
+});
+
+// ** UPDATE USER **
+
+const testTemplateUpdate = async (newData, errorMessage) => {
+  const result = await request(app)
+    .put(`${MAIN_ROTE}/${user.id}`)
+    .send({ ...newData });
+  expect(result.status).toBe(400);
+  expect(result.body.error).toBe(errorMessage);
+};
 test('Should update a users', async () => {
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
     .send({
+      name: 'User#0',
       street: 'Rua Ali perto',
       number: '1200',
       city: 'Camaçari',

@@ -2,7 +2,7 @@
 
 exports.up = (knex) => knex.schema.createTable('users', (t) => {
   t.increments('id').primary();
-  t.string('name', 255).notNull();
+  t.string('name', 255);
   t.string('email', 255).notNull().unique();
   t.string('password', 255).notNull();
   t.boolean('status').notNull().default(true);
