@@ -10,127 +10,49 @@ module.exports = (app) => {
     return bcrypt.hashSync(password, salt);
   };
 
-  const userResponseFields = ['id', 'name', 'email', 'zipCode', 'street', 'number', 'city', 'state', 'district', 'status', 'dateCreate', 'dateLastUpdate'];
+  function Fields(translationToPt, minFieldLength, maxFieldLength, fieldType, isUnique, insertAtLogin, returnValue) {
+    this.translationToPt = translationToPt;
+    this.minFieldLength = minFieldLength;
+    this.maxFieldLength = maxFieldLength;
+    this.fieldType = fieldType;
+    this.isUnique = isUnique;
+    this.insertAtLogin = insertAtLogin;
+    this.returnValue = returnValue;
+  }
 
-  const users = {
-    id: {
-      translation_pt: 'id',
-      minFieldLength: 0,
-      maxFieldLength: 2147483647,
-      fieldType: 'number',
-      isUnique: true,
-      insertAtLogin: true,
-      returnValue: true,
-    },
-    name: {
-      translation_pt: 'nome',
-      minFieldLength: 0,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    email: {
-      translation_pt: 'email',
-      minFieldLength: 0,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: true,
-      insertAtLogin: true,
-      returnValue: true,
-    },
-    password: {
-      translation_pt: 'senha',
-      minFieldLength: 6,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: true,
-      returnValue: false,
-    },
-    zipCode: {
-      translation_pt: 'código postal',
-      minFieldLength: 8,
-      maxFieldLength: 8,
-      fieldType: 'number',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    street: {
-      translation_pt: 'rua',
-      minFieldLength: 0,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    number: {
-      translation_pt: 'número',
-      minFieldLength: 0,
-      maxFieldLength: 8,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    city: {
-      translation_pt: 'cidade',
-      minFieldLength: 0,
-      maxFieldLength: 50,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    state: {
-      translation_pt: 'estado',
-      minFieldLength: 2,
-      maxFieldLength: 2,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    district: {
-      translation_pt: 'bairro',
-      minFieldLength: 0,
-      maxFieldLength: 50,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-    status: {
-      translation_pt: 'status',
-      minFieldLength: 0,
-      maxFieldLength: 5,
-      fieldType: 'boolean',
-      isUnique: false,
-      insertAtLogin: true,
-      returnValue: true,
-    },
-    dateCreate: {
-      translation_pt: 'data de criação',
-      minFieldLength: 0,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: true,
-      returnValue: true,
-    },
-    dateLastUpdate: {
-      translation_pt: 'data de atualização',
-      minFieldLength: 0,
-      maxFieldLength: 255,
-      fieldType: 'string',
-      isUnique: false,
-      insertAtLogin: false,
-      returnValue: true,
-    },
-  };
+  class Users {
+    constructor(id, name, email, password, zipCode, street, number, city, state, district, status, dateCreate, dateLastUpdate) {
+      this.id = { ...new Fields(...id) };
+      this.name = { ...new Fields(...name) };
+      this.email = { ...new Fields(...email) };
+      this.password = { ...new Fields(...password) };
+      this.zipCode = { ...new Fields(...zipCode) };
+      this.street = { ...new Fields(...street) };
+      this.number = { ...new Fields(...number) };
+      this.city = { ...new Fields(...city) };
+      this.state = { ...new Fields(...state) };
+      this.district = { ...new Fields(...district) };
+      this.status = { ...new Fields(...status) };
+      this.dateCreate = { ...new Fields(...dateCreate) };
+      this.dateLastUpdate = { ...new Fields(...dateLastUpdate) };
+    }
+  }
+
+  const users = new Users(
+    ['id', 0, 2147483647, 'number', true, true, true],
+    ['nome', 0, 255, 'string', false, false, true],
+    ['email', 0, 255, 'string', true, true, true],
+    ['senha', 6, 255, 'string', false, true, false],
+    ['código postal', 8, 8, 'number', false, false, true],
+    ['rua', 0, 255, 'string', false, false, true],
+    ['número', 0, 8, 'string', false, false, true],
+    ['cidade', 0, 50, 'string', false, false, true],
+    ['estado', 2, 2, 'string', false, false, true],
+    ['bairro', 0, 50, 'string', false, false, true],
+    ['status', 0, 5, 'boolean', false, true, true],
+    ['data de criação', 0, 255, 'string', false, true, true],
+    ['data de atualização', 0, 255, 'string', false, false, true],
+  );
 
   const getUserFields = (field) => {
     let translated;
@@ -139,6 +61,18 @@ module.exports = (app) => {
       if (key === field) { translated = value; }
     });
     return translated;
+  };
+
+  const getUserProps = (propField, valueField) => {
+    const arr = [];
+    // eslint-disable-next-line array-callback-return
+    Object.entries(users).filter(([key, value]) => {
+      const prop = key;
+      Object.entries(value).forEach(([key2, value2]) => {
+        if (key2 === propField && value2 === valueField) arr.push(prop);
+      });
+    });
+    return arr;
   };
 
   // TODO check the viability of email validation in the back end
@@ -153,30 +87,30 @@ module.exports = (app) => {
   const validation = (user) => {
     Object.entries(user).forEach(([key, value]) => {
       const userFields = getUserFields(key);
-      if (value === null) throw new ValidationError(`O campo ${userFields.translation_pt} é um atributo obrigatório`);
+      if (value === null) throw new ValidationError(`O campo ${userFields.translationToPt} é um atributo obrigatório`);
       const fieldLength = value.toString().length;
       if (
         (value)
         && (userFields.isUnique === true)
-      ) throw new ValidationError(`O campo ${userFields.translation_pt} não pode ser alterado`);
+      ) throw new ValidationError(`O campo ${userFields.translationToPt} não pode ser alterado`);
       if (
         (value)
         // eslint-disable-next-line valid-typeof
         && (typeof value !== userFields.fieldType)
-      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ser um(a) ${userFields.fieldType}`);
+      ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ser um(a) ${userFields.fieldType}`);
       if (
         (value)
         && (userFields.minFieldLength === userFields.maxFieldLength)
         && fieldLength !== userFields.maxFieldLength
-      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ter ${userFields.maxFieldLength} caracteres`);
+      ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ter ${userFields.maxFieldLength} caracteres`);
       if (
         (value)
         && (fieldLength < userFields.minFieldLength || fieldLength > userFields.maxFieldLength)
-      ) throw new ValidationError(`O campo ${userFields.translation_pt} deve ter de ${userFields.minFieldLength} a ${userFields.maxFieldLength} caracteres`);
+      ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ter de ${userFields.minFieldLength} a ${userFields.maxFieldLength} caracteres`);
     });
   };
 
-  const findAll = () => app.db('users').select(userResponseFields);
+  const findAll = () => app.db('users').select(getUserProps('returnValue', true));
 
   const findOne = (user) => app.db('users').where({ email: user.email }).select().first();
 
@@ -190,10 +124,10 @@ module.exports = (app) => {
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
     Object.entries(userData).forEach(([key]) => {
       const userField = getUserFields(key);
-      if (userField.insertAtLogin === false) throw new ValidationError(`O campo ${userField.translation_pt} não deve ser inserido nessa etapa`);
+      if (userField.insertAtLogin === false) throw new ValidationError(`O campo ${userField.translationToPt} não deve ser inserido nessa etapa`);
     });
     userData.password = getPasswordHash(userData.password);
-    return app.db('users').insert(userData, userResponseFields);
+    return app.db('users').insert(userData, getUserProps('returnValue', true));
   };
 
   const update = async (id, user) => {
@@ -201,7 +135,7 @@ module.exports = (app) => {
     if (userData.password) userData.password = getPasswordHash(userData.password);
     validation(user);
     userData.dateLastUpdate = getTimestamp();
-    return app.db('users').where({ id }).update(userData, userResponseFields);
+    return app.db('users').where({ id }).update(userData, getUserProps('returnValue', true));
   };
   return {
     findAll, save, findOne, update,
