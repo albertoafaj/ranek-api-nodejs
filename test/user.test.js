@@ -62,7 +62,7 @@ test('should not insert user without password', async () => {
       email: user.email,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('A campo senha é um atributo obrigatório');
+  expect(result.body.error).toBe('O campo senha é um atributo obrigatório');
 });
 
 test('should not insert user with null password', async () => {
@@ -73,7 +73,7 @@ test('should not insert user with null password', async () => {
       password: null,
     });
   expect(result.status).toBe(400);
-  expect(result.body.error).toBe('A campo senha é um atributo obrigatório');
+  expect(result.body.error).toBe('O campo senha é um atributo obrigatório');
 });
 
 test('should not insert user with registered email', async () => {
@@ -87,7 +87,7 @@ test('should not insert user with registered email', async () => {
 const testTemplateInsert = async (newData, errorMessage) => {
   const result = await request(app)
     .post(MAIN_ROTE)
-    .send({ ...newData, email: `${Date.now()}@ranek.com`, password: user.password });
+    .send({ email: `${Date.now()}@ranek.com`, password: user.password, ...newData });
   expect(result.status).toBe(400);
   expect(result.body.error).toBe(errorMessage);
 };
@@ -101,6 +101,9 @@ describe('when try to insert a users', () => {
   test('Should not insert the state', () => testTemplateInsert({ state: 12 }, 'O campo estado não deve ser inserido nessa etapa'));
   test('Should not insert the zipCode', () => testTemplateInsert({ zipCode: 'ABCDEFGH' }, 'O campo código postal não deve ser inserido nessa etapa'));
   test('Should not insert the district', () => testTemplateInsert({ district: 12 }, 'O campo bairro não deve ser inserido nessa etapa'));
+  test('Should not insert the district', () => testTemplateInsert({ district: 12 }, 'O campo bairro não deve ser inserido nessa etapa'));
+  test('Should not insert email to incorrect type', () => testTemplateInsert({ email: 12314 }, 'O campo email deve ser um(a) string'));
+  test('Should not insert password to incorrect type', () => testTemplateInsert({ password: 12314 }, 'O campo senha deve ser um(a) string'));
 });
 
 // ** UPDATE USER **

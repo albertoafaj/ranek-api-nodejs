@@ -55,12 +55,12 @@ module.exports = (app) => {
   );
 
   const getUserFields = (field) => {
-    let translated;
+    let fieldValue;
     // eslint-disable-next-line array-callback-return
     Object.entries(users).filter(([key, value]) => {
-      if (key === field) { translated = value; }
+      if (key === field) { fieldValue = value; }
     });
-    return translated;
+    return fieldValue;
   };
 
   const getUserProps = (propField, valueField) => {
@@ -77,34 +77,28 @@ module.exports = (app) => {
 
   // TODO check the viability of email validation in the back end
 
-  /*   const validateEmail = (email) => {
-    const reg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-      if (!reg.test(email)) {
-        throw ValidationError('Email invalido');
-      }
-    }; */
-
-  const validation = (user) => {
+  const validation = (user, insertAtLogin, checkIsNull, checkIsUnique, checkTypeOf, checkFieldLength) => {
     Object.entries(user).forEach(([key, value]) => {
       const userFields = getUserFields(key);
-      if (value === null) throw new ValidationError(`O campo ${userFields.translationToPt} é um atributo obrigatório`);
+      if (checkIsNull && value === null) throw new ValidationError(`O campo ${userFields.translationToPt} é um atributo obrigatório`);
       const fieldLength = value.toString().length;
       if (
-        (value)
+        (value && checkIsUnique)
         && (userFields.isUnique === true)
       ) throw new ValidationError(`O campo ${userFields.translationToPt} não pode ser alterado`);
+      if (insertAtLogin && userFields.insertAtLogin === false) throw new ValidationError(`O campo ${userFields.translationToPt} não deve ser inserido nessa etapa`);
       if (
-        (value)
+        (value && checkTypeOf)
         // eslint-disable-next-line valid-typeof
         && (typeof value !== userFields.fieldType)
       ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ser um(a) ${userFields.fieldType}`);
       if (
-        (value)
+        (value && checkFieldLength)
         && (userFields.minFieldLength === userFields.maxFieldLength)
         && fieldLength !== userFields.maxFieldLength
       ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ter ${userFields.maxFieldLength} caracteres`);
       if (
-        (value)
+        (value && checkFieldLength)
         && (fieldLength < userFields.minFieldLength || fieldLength > userFields.maxFieldLength)
       ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ter de ${userFields.minFieldLength} a ${userFields.maxFieldLength} caracteres`);
     });
@@ -116,16 +110,11 @@ module.exports = (app) => {
 
   const save = async (user) => {
     const userData = user;
-    // if (!userData.name) throw new ValidationError('Nome é um atributo obrigatório');
     if (!userData.email) throw new ValidationError('O campo e-mail é um atributo obrigatório');
-    // validateEmail(userData.email);
-    if (!userData.password) throw new ValidationError('A campo senha é um atributo obrigatório');
+    if (!userData.password) throw new ValidationError('O campo senha é um atributo obrigatório');
     const userDB = await findOne(user);
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
-    Object.entries(userData).forEach(([key]) => {
-      const userField = getUserFields(key);
-      if (userField.insertAtLogin === false) throw new ValidationError(`O campo ${userField.translationToPt} não deve ser inserido nessa etapa`);
-    });
+    validation(user, true, true, false, true, false);
     userData.password = getPasswordHash(userData.password);
     return app.db('users').insert(userData, getUserProps('returnValue', true));
   };
@@ -133,7 +122,7 @@ module.exports = (app) => {
   const update = async (id, user) => {
     const userData = user;
     if (userData.password) userData.password = getPasswordHash(userData.password);
-    validation(user);
+    validation(user, false, true, true, true, true);
     userData.dateLastUpdate = getTimestamp();
     return app.db('users').where({ id }).update(userData, getUserProps('returnValue', true));
   };
