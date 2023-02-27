@@ -1,5 +1,7 @@
 const request = require('supertest');
+const jwt = require('jwt-simple');
 const app = require('../src/app');
+require('dotenv').config();
 
 const MAIN_ROTE = '/users';
 let user;
@@ -12,10 +14,13 @@ beforeAll(async () => {
   });
   user = { ...result[0] };
   user.password = '123456';
+  user.token = jwt.encode(user, process.env.JWTSEC);
 });
 
 test('Should to list all users', async () => {
-  const result = await request(app).get('/users');
+  const result = await request(app)
+    .get('/users')
+    .set('authorization', `bearer ${user.token}`);
   expect(result.status).toBe(200);
   expect(result.body.length).toBeGreaterThan(0);
 });
@@ -23,6 +28,7 @@ test('Should to list all users', async () => {
 test('Should insert a user with sucess', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       email: `${Date.now()}@ranek.com`,
       password: '123456',
@@ -35,6 +41,7 @@ test('Should insert a user with sucess', async () => {
 test('should insert a crypt password', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       email: `${Date.now()}@ranek.com`,
       password: '123456',
@@ -48,6 +55,7 @@ test('should insert a crypt password', async () => {
 test('should not insert user without email', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       password: user.password,
     });
@@ -58,6 +66,7 @@ test('should not insert user without email', async () => {
 test('should not insert user without password', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       email: user.email,
     });
@@ -68,6 +77,7 @@ test('should not insert user without password', async () => {
 test('should not insert user with null password', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       email: 'ranek@gmail.com',
       password: null,
@@ -79,6 +89,7 @@ test('should not insert user with null password', async () => {
 test('should not insert user with registered email', async () => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send(user);
   expect(result.status).toBe(400);
   expect(result.body.error).toBe('Já existe um usuário com este email');
@@ -87,6 +98,7 @@ test('should not insert user with registered email', async () => {
 const testTemplateInsert = async (newData, errorMessage) => {
   const result = await request(app)
     .post(MAIN_ROTE)
+    .set('authorization', `bearer ${user.token}`)
     .send({ email: `${Date.now()}@ranek.com`, password: user.password, ...newData });
   expect(result.status).toBe(400);
   expect(result.body.error).toBe(errorMessage);
@@ -111,6 +123,7 @@ describe('when try to insert a users', () => {
 const testTemplateUpdate = async (newData, errorMessage) => {
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
+    .set('authorization', `bearer ${user.token}`)
     .send({ ...newData });
   expect(result.status).toBe(400);
   expect(result.body.error).toBe(errorMessage);
@@ -118,6 +131,7 @@ const testTemplateUpdate = async (newData, errorMessage) => {
 test('Should update a users', async () => {
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       name: 'User#0',
       street: 'Rua Ali perto',
@@ -145,6 +159,7 @@ test('Should update a users', async () => {
 test('should update a crypt password', async () => {
   const result = await request(app)
     .put(`${MAIN_ROTE}/${user.id}`)
+    .set('authorization', `bearer ${user.token}`)
     .send({
       password: '123',
     });

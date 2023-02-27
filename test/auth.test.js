@@ -3,6 +3,10 @@ const app = require('../src/app');
 
 const MAIN_ROTE = '/auth/signin';
 
+beforeAll(async () => {
+  await app.db('users').del();
+});
+
 describe('when try loggin', () => {
   const testTemplate = async (savePass, logginPass) => {
     const email = `${Date.now()}@token.com`;
@@ -47,8 +51,26 @@ describe('when try loggin', () => {
     const result = await request(app).post(MAIN_ROTE).send({
       email: 'non-existent@user.com',
     });
-    console.log(result.body);
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('Usuário ou senha inválido');
   });
+});
+
+describe('when try create a user', () => {
+  test('should return email prop and not passwoed', async () => {
+    const user = {
+      email: 'signup@user',
+      password: '123456',
+    };
+    const result = await request(app).post('/auth/signup')
+      .send(user);
+    expect(result.status).toBe(201);
+    expect(result.body).toHaveProperty('email');
+    expect(result.body).not.toHaveProperty('password');
+  });
+});
+
+test('should not access protect route', async () => {
+  const users = await request(app).get('/users');
+  expect(users.status).toBe(401);
 });

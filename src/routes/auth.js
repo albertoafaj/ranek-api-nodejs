@@ -25,5 +25,13 @@ module.exports = (app) => {
       return next(error);
     }
   };
-  return { signin };
+  const signup = async (req, res, next) => {
+    try {
+      const user = await app.services.user.save(req.body);
+      return res.status(201).json(user[0]);
+    } catch (error) {
+      return next(error);
+    }
+  };
+  return { signin, signup };
 };
