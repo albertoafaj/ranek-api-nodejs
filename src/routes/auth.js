@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
+const express = require('express');
 require('dotenv').config();
 
 const ValidationsError = require('../err/ValidationsError');
 
 module.exports = (app) => {
-  const signin = async (req, res, next) => {
+  const router = express.Router();
+  router.post('/signin', async (req, res, next) => {
     try {
       if (!req.body.email) throw new ValidationsError('Usuário ou senha inválido');
       const user = await app.services.user.findOne({ email: req.body.email });
@@ -24,14 +26,15 @@ module.exports = (app) => {
     } catch (error) {
       return next(error);
     }
-  };
-  const signup = async (req, res, next) => {
+  });
+
+  router.post('/signup', async (req, res, next) => {
     try {
       const user = await app.services.user.save(req.body);
       return res.status(201).json(user[0]);
     } catch (error) {
       return next(error);
     }
-  };
-  return { signin, signup };
+  });
+  return router;
 };

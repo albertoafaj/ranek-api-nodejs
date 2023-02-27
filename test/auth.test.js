@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 
-const MAIN_ROTE = '/auth/signin';
+const MAIN_ROTE = '/auth';
 
 beforeAll(async () => {
   await app.db('users').del();
@@ -15,7 +15,7 @@ describe('when try loggin', () => {
       password: savePass,
     });
     const result = await request(app)
-      .post(MAIN_ROTE)
+      .post(`${MAIN_ROTE}${'/signin'}`)
       .send({
         email,
         password: logginPass,
@@ -33,7 +33,7 @@ describe('when try loggin', () => {
     expect(result.body.error).toBe('Usuário ou senha inválido');
   });
   test('should not login non-existent user', async () => {
-    const result = await request(app).post(MAIN_ROTE).send({
+    const result = await request(app).post(`${MAIN_ROTE}${'/signin'}`).send({
       email: 'non-existent@user.com',
       password: '123456',
     });
@@ -41,14 +41,14 @@ describe('when try loggin', () => {
     expect(result.body.error).toBe('Usuário ou senha inválido');
   });
   test('should not login without email', async () => {
-    const result = await request(app).post(MAIN_ROTE).send({
+    const result = await request(app).post(`${MAIN_ROTE}${'/signin'}`).send({
       password: '123456',
     });
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('Usuário ou senha inválido');
   });
   test('should not login without password', async () => {
-    const result = await request(app).post(MAIN_ROTE).send({
+    const result = await request(app).post(`${MAIN_ROTE}${'/signin'}`).send({
       email: 'non-existent@user.com',
     });
     expect(result.status).toBe(400);
@@ -62,7 +62,7 @@ describe('when try create a user', () => {
       email: 'signup@user',
       password: '123456',
     };
-    const result = await request(app).post('/auth/signup')
+    const result = await request(app).post(`${MAIN_ROTE}${'/signup'}`)
       .send(user);
     expect(result.status).toBe(201);
     expect(result.body).toHaveProperty('email');
@@ -71,6 +71,6 @@ describe('when try create a user', () => {
 });
 
 test('should not access protect route', async () => {
-  const users = await request(app).get('/users');
+  const users = await request(app).get('/v1/users');
   expect(users.status).toBe(401);
 });

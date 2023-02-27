@@ -3,7 +3,7 @@ const jwt = require('jwt-simple');
 const app = require('../src/app');
 require('dotenv').config();
 
-const MAIN_ROTE = '/users';
+const MAIN_ROTE = '/v1/users';
 let user;
 
 beforeAll(async () => {
@@ -19,7 +19,7 @@ beforeAll(async () => {
 
 test('Should to list all users', async () => {
   const result = await request(app)
-    .get('/users')
+    .get(MAIN_ROTE)
     .set('authorization', `bearer ${user.token}`);
   expect(result.status).toBe(200);
   expect(result.body.length).toBeGreaterThan(0);
