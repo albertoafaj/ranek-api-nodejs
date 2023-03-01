@@ -18,12 +18,18 @@ beforeAll(async () => {
   user.password = '123456';
   user.token = jwt.encode({ id: user.id, email: user.email }, process.env.JWTSEC);
   // TODO save a product
-  product = await app.services.product.save({
+  product = await app.services.product.save([{
     user_id: user.id,
     name: 'Notebook',
     price: 6999.99,
     description: 'Notebook DELL I7',
-  });
+  },
+  {
+    user_id: user.id,
+    name: 'Notebook2',
+    price: 7999.99,
+    description: 'Notebook DELL I7',
+  }]);
   product = { ...product[0] };
 });
 
@@ -35,7 +41,14 @@ describe('Whe try get products', () => {
     expect(result.status).toBe(200);
     expect(result.body.id).toBe(product.id);
   });
-  test('should list by user id', () => { });
+  test('should list by user id', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?user_id=${user.id}`)
+      .set('authorization', `bearer ${user.token}`);
+    console.log(result.body);
+    expect(result.status).toBe(200);
+    expect(result.body[0].user_id).toBe(user.id);
+  });
   test('should list by query param d', () => { });
   test('should list by limite of page vizualization', () => { });
   test('should return in header field x-total-count', () => { });
