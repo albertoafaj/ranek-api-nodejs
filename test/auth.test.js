@@ -4,6 +4,7 @@ const app = require('../src/app');
 const MAIN_ROTE = '/auth';
 
 beforeAll(async () => {
+  await app.db('products').del();
   await app.db('users').del();
 });
 

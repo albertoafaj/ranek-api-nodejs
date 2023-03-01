@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-exports.up = (knex) => knex.schema.createTable('product', (t) => {
+exports.up = (knex) => knex.schema.createTable('products', (t) => {
   t.increments('id').primary();
   t.integer('user_id')
     .references('id')
@@ -12,4 +12,4 @@ exports.up = (knex) => knex.schema.createTable('product', (t) => {
   t.binary('photos').default(null);
 });
 
-exports.down = (knex) => knex.schema.dropTable('product');
+exports.down = (knex) => knex.schema.dropTable('products');

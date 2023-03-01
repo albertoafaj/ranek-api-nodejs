@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   router.get('/:id', async (req, res, next) => {
     try {
-      const result = await app.db('products').where({ id: req.params.id }).select();
+      const result = await app.services.product.findOne({ id: req.params.id });
       return res.status(200).json(result);
     } catch (error) {
       return next(error);

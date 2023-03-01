@@ -7,6 +7,7 @@ const MAIN_ROTE = '/v1/users';
 let user;
 
 beforeAll(async () => {
+  await app.db('products').del();
   await app.db('users').del();
   const result = await app.services.user.save({
     email: `${Date.now()}@ranek.com`,
@@ -14,7 +15,7 @@ beforeAll(async () => {
   });
   user = { ...result[0] };
   user.password = '123456';
-  user.token = jwt.encode(user, process.env.JWTSEC);
+  user.token = jwt.encode({ id: user.id, email: user.email }, process.env.JWTSEC);
 });
 
 test('Should to list all users', async () => {
