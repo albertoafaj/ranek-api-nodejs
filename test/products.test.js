@@ -5,10 +5,10 @@ const app = require('../src/app');
 
 let user;
 let product;
-const MAIN_ROUTE = '/v1/product';
+const MAIN_ROUTE = '/v1/products';
 
 beforeAll(async () => {
-  await app.db('product').del();
+  await app.db('products').del();
   await app.db('users').del();
   user = await app.services.user.save({
     email: 'user_product@email.com',
@@ -18,12 +18,20 @@ beforeAll(async () => {
   user.password = '123456';
   user.token = jwt.encode({ id: user.id, email: user.email }, process.env.JWTSEC);
   // TODO save a product
+  product = await app.services.product.save({
+    user_id: user.id,
+    name: 'Notebook',
+    price: 6999.99,
+    description: 'Notebook DELL I7',
+  });
+  product = { ...product[0] };
 });
 
 describe('Whe try get products', () => {
   test('should list by id', async () => {
     const result = await request(app)
-      .get(`${MAIN_ROUTE}:${product.id}`);
+      .get(`${MAIN_ROUTE}/${product.id}`)
+      .set('authorization', `bearer ${user.token}`);
     expect(result.status).toBe(200);
     expect(result.body.id).toBe(product.id);
   });
