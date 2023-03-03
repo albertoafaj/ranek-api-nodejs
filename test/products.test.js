@@ -19,21 +19,40 @@ beforeAll(async () => {
   user.token = jwt.encode({ id: user.id, email: user.email }, process.env.JWTSEC);
   // TODO save a product
   product = await app.services.product.save([{
-    user_id: user.id,
-    name: 'Notebook',
+    userId: user.id,
+    name: 'Computador',
     price: 6999.99,
-    description: 'Notebook DELL I7',
+    description: 'Note DELL I7',
   },
   {
-    user_id: user.id,
+    userId: user.id,
+    name: 'Notebook',
+    price: 6999.99,
+    description: 'DELL I7',
+  },
+  {
+    userId: user.id,
     name: 'Notebook2',
     price: 7999.99,
-    description: 'Notebook DELL I7',
+    description: 'Notebook DELL I7 query d',
+  },
+  {
+    userId: user.id,
+    name: 'Smartphone',
+    price: 7999.99,
+    description: 'Smartphone query d',
   }]);
   product = { ...product[0] };
 });
 
 describe('Whe try get products', () => {
+  test('should list all products', async () => {
+    const result = await request(app)
+      .get(MAIN_ROUTE)
+      .set('authorization', `bearer ${user.token}`);
+    expect(result.status).toBe(200);
+    expect(result.body.length).toBe(4);
+  });
   test('should list by id', async () => {
     const result = await request(app)
       .get(`${MAIN_ROUTE}/${product.id}`)
@@ -43,13 +62,19 @@ describe('Whe try get products', () => {
   });
   test('should list by user id', async () => {
     const result = await request(app)
-      .get(`${MAIN_ROUTE}?user_id=${user.id}`)
+      .get(`${MAIN_ROUTE}?userId=${user.id}`)
+      .set('authorization', `bearer ${user.token}`);
+    expect(result.status).toBe(200);
+    expect(result.body[0].userId).toBe(user.id);
+  });
+  test('should list by query param keywords', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?keywords=Note`)
       .set('authorization', `bearer ${user.token}`);
     console.log(result.body);
     expect(result.status).toBe(200);
-    expect(result.body[0].user_id).toBe(user.id);
+    expect(result.body.length).toBe(3);
   });
-  test('should list by query param d', () => { });
   test('should list by limite of page vizualization', () => { });
   test('should return in header field x-total-count', () => { });
 });
