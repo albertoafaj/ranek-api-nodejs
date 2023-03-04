@@ -34,10 +34,12 @@ describe('Whe try get products', () => {
   });
   test('should list all queries requested by each keyword passed in the query parameter keywords', async () => {
     const result = await request(app)
-      .get(`${MAIN_ROUTE}?keywords=Notebook2%20smart`)
+      .get(`${MAIN_ROUTE}?keywords=nOTEbook2%20rAneK`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(200);
-    expect(result.body.length).toBe(3);
+    expect(result.body.length).toBe(2);
+    expect(result.body[0].name).toBe('Notebook2');
+    expect(result.body[1].name).toBe('Smartphone');
   });
   test('should list by limite of page vizualization', () => { });
   test('should return in header field x-total-count', () => { });

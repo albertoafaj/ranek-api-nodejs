@@ -40,8 +40,8 @@ exports.seed = async (knex) => {
       id: 10003,
       userId: 10000,
       name: 'Smartphone',
-      price: 7999.99,
-      description: 'Smartphone query d',
+      price: 3999.99,
+      description: 'TechnoRanek query d',
       dateCreate: knex.fn.now(),
     }
   ]);

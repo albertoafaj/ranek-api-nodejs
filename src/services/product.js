@@ -46,12 +46,31 @@ module.exports = (app) => {
   const findOne = (filter) => app.db('products').where(filter).first();
   const findAll = (filter) => app.db('products').where(filter).select();
 
-  const findQ = (field, keyword) => app.db('products')
-    .whereLike(field, `%${keyword}%`)
-    .select();
+  const findKeyWord = async (keywords) => {
+    let result = [];
+    const fieldSearch = ['name', 'description'];
+    const keywordsList = keywords.split(' ');
+
+    fieldSearch.forEach((field) => {
+      keywordsList.forEach((keyword) => {
+        result.push(app.db('products')
+          .whereILike(field, `%${keyword}%`)
+          .select());
+      });
+    });
+    result = await Promise.all(result).then((data) => data);
+    const removeDuplicate = [];
+    result.map((duplicate) => duplicate.forEach((el) => {
+      if (!removeDuplicate.includes(JSON.stringify(el))) {
+        removeDuplicate.push(JSON.stringify(el));
+      }
+    }));
+    result = removeDuplicate.map((el) => JSON.parse(el));
+    return result;
+  };
 
   const save = async (product) => app.db('products').insert(product, '*');
   return {
-    findOne, save, findAll, findQ,
+    findOne, save, findAll, findKeyWord,
   };
 };

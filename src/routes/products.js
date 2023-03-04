@@ -7,23 +7,10 @@ module.exports = (app) => {
   router.get('/', async (req, res, next) => {
     try {
       let result = [];
-      const fieldSearch = ['name', 'description'];
       const { keywords, userId } = qs.parse(req.query);
       if (userId) result = await app.services.product.findAll({ userId });
       if (!keywords && !userId) result = await app.services.product.findAll({});
-      if (keywords) {
-        fieldSearch.forEach((field) => {
-          result.push(app.services.product.findQ(field, keywords));
-        });
-        result = await Promise.all(result).then((data) => data);
-        const removeDuplicate = [];
-        result.map((duplicate) => duplicate.forEach((el) => {
-          if (!removeDuplicate.includes(JSON.stringify(el))) {
-            removeDuplicate.push(JSON.stringify(el));
-          }
-        }));
-        result = removeDuplicate;
-      }
+      if (keywords) result = await app.services.product.findKeyWord(keywords);
       return res.status(200).json(result);
     } catch (error) {
       return next(error);
