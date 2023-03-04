@@ -9,6 +9,7 @@ module.exports = (app) => {
       let result = [];
       const fieldSearch = ['name', 'description'];
       const { keywords, userId } = qs.parse(req.query);
+      if (userId) result = await app.services.product.findAll({ userId });
       if (!keywords && !userId) result = await app.services.product.findAll({});
       if (keywords) {
         fieldSearch.forEach((field) => {
@@ -23,8 +24,6 @@ module.exports = (app) => {
         }));
         result = removeDuplicate;
       }
-      if (userId) result = await app.services.product.findAll({ userId });
-
       return res.status(200).json(result);
     } catch (error) {
       return next(error);

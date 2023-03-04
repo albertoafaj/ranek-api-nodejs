@@ -12,5 +12,6 @@ module.exports = {
       database: process.env.DB_TEST,
     },
     migrations: { directory: 'src/migrations' },
+    seeds: { directory: 'src/seeds' },
   },
 };
