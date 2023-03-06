@@ -16,7 +16,7 @@ describe('Whe try get products', () => {
       .get(MAIN_ROUTE)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(200);
-    expect(result.body.length).toBe(4);
+    expect(result.body.length).toBe(10);
   });
   test('should list by id', async () => {
     const result = await request(app)
@@ -41,7 +41,31 @@ describe('Whe try get products', () => {
     expect(result.body[0].name).toBe('Notebook2');
     expect(result.body[1].name).toBe('Smartphone');
   });
-  test('should list by limite of page vizualization', () => { });
+  test('should divide the query by a limit number of products', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?limit=3`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(200);
+    expect(result.body).toHaveLength(3);
+  });
+  test('should divide the query by a limit number of products per page', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?page=2&limit=3`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(200);
+    expect(result.body).toHaveLength(3);
+    expect(result.body[0].id).toBe(10003);
+  });
+
+  test('should divide the query into 9 products per page if the limit is not informed', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?page=2`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(200);
+    expect(result.body).toHaveLength(1);
+    expect(result.body[0].id).toBe(10009);
+  });
+
   test('should return in header field x-total-count', () => { });
 });
 test('should ', () => {

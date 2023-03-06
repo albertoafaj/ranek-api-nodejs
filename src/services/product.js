@@ -50,6 +50,7 @@ module.exports = (app) => {
     let result = [];
     const fieldSearch = ['name', 'description'];
     const keywordsList = keywords.split(' ');
+    const removeDuplicate = [];
 
     fieldSearch.forEach((field) => {
       keywordsList.forEach((keyword) => {
@@ -59,7 +60,6 @@ module.exports = (app) => {
       });
     });
     result = await Promise.all(result).then((data) => data);
-    const removeDuplicate = [];
     result.map((duplicate) => duplicate.forEach((el) => {
       if (!removeDuplicate.includes(JSON.stringify(el))) {
         removeDuplicate.push(JSON.stringify(el));

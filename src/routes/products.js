@@ -7,10 +7,22 @@ module.exports = (app) => {
   router.get('/', async (req, res, next) => {
     try {
       let result = [];
-      const { keywords, userId } = qs.parse(req.query);
+      const limitDefault = 9;
+      const pageDefault = 1;
+      const {
+        keywords, userId, limit, page,
+      } = qs.parse(req.query);
       if (userId) result = await app.services.product.findAll({ userId });
       if (!keywords && !userId) result = await app.services.product.findAll({});
       if (keywords) result = await app.services.product.findKeyWord(keywords);
+      if (page || limit) {
+        let pageNumber = page;
+        let productsPerPage = limit;
+        if (!page) pageNumber = pageDefault;
+        if (!limit) productsPerPage = limitDefault;
+        result = result
+          .slice((pageNumber - 1) * productsPerPage, pageNumber * parseInt(productsPerPage, 10));
+      }
       return res.status(200).json(result);
     } catch (error) {
       return next(error);
