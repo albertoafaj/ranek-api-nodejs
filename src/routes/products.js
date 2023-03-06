@@ -15,6 +15,7 @@ module.exports = (app) => {
       if (userId) result = await app.services.product.findAll({ userId });
       if (!keywords && !userId) result = await app.services.product.findAll({});
       if (keywords) result = await app.services.product.findKeyWord(keywords);
+      res.append('x-total-count', JSON.stringify(result.length));
       if (page || limit) {
         let pageNumber = page;
         let productsPerPage = limit;

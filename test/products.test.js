@@ -66,7 +66,15 @@ describe('Whe try get products', () => {
     expect(result.body[0].id).toBe(10009);
   });
 
-  test('should return in header field x-total-count', () => { });
+  test('should return in header field x-total-count', async () => {
+    const result = await request(app)
+      .get(`${MAIN_ROUTE}?page=2&limit=2`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(200);
+    expect(result.header).toHaveProperty('x-total-count');
+    expect(result.header['x-total-count']).toBe('10');
+  });
 });
-test('should ', () => {
+test('should ', async () => {
+
 });
