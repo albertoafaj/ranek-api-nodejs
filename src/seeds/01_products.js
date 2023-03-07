@@ -10,6 +10,13 @@ exports.seed = async (knex) => {
       status: true,
       dateCreate: knex.fn.now(),
     },
+    {
+      id: 10001,
+      email: 'user_product02@email.com',
+      password: '$2a$10$S4VRH2lhQPSuwysEjJpYUu/eG4Jc1Bg5LF7J7OgsTN3H3H4vD3OYO',
+      status: true,
+      dateCreate: knex.fn.now(),
+    },
   ]);
   await knex('products').insert([
     {

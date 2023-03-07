@@ -43,7 +43,10 @@ module.exports = (app) => {
       ['data de atualização', 0, 255, 'string', false, false, true],
     ); */
 
-  const findOne = (filter) => app.db('products').where(filter).first();
+  const findOne = async (filter) => {
+    const result = await app.db('products').where(filter).first();
+    return result;
+  };
   const findAll = (filter) => app.db('products').where(filter).select();
 
   const findKeyWord = async (keywords) => {
