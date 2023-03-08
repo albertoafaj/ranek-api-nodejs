@@ -210,7 +210,6 @@ describe('when try to update the fields to incorrect type', () => {
 describe('when trying to update fields to values less than or greater than the preset', () => {
   const stringGenaretor = (length) => {
     const arr = [];
-    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < length; i++) {
       arr.push('A');
     }

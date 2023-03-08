@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// eslint-disable-next-line no-shadow
+//
 
 // LOGGER
 

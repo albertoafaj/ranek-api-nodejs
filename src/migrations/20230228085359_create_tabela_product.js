@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 exports.up = (knex) => knex.schema.createTable('products', (t) => {
   t.increments('id').primary();
   t.integer('userId')

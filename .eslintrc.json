@@ -12,6 +12,7 @@
     "ecmaVersion": "latest"
   },
   "rules": {
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": ["always", "windows"],
+    "valid-typeof": ["error", { "requireStringLiterals": false }]
   }
 }

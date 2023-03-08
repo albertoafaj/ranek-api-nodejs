@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const getTimestamp = require('../utils/getTimeStamp');
@@ -10,7 +9,15 @@ module.exports = (app) => {
     return bcrypt.hashSync(password, salt);
   };
 
-  function Fields(translationToPt, minFieldLength, maxFieldLength, fieldType, isUnique, insertAtLogin, returnValue) {
+  function Fields(
+    translationToPt,
+    minFieldLength,
+    maxFieldLength,
+    fieldType,
+    isUnique,
+    insertAtLogin,
+    returnValue,
+  ) {
     this.translationToPt = translationToPt;
     this.minFieldLength = minFieldLength;
     this.maxFieldLength = maxFieldLength;
@@ -21,7 +28,21 @@ module.exports = (app) => {
   }
 
   class Users {
-    constructor(id, name, email, password, zipCode, street, number, city, state, district, status, dateCreate, dateLastUpdate) {
+    constructor(
+      id,
+      name,
+      email,
+      password,
+      zipCode,
+      street,
+      number,
+      city,
+      state,
+      district,
+      status,
+      dateCreate,
+      dateLastUpdate,
+    ) {
       this.id = { ...new Fields(...id) };
       this.name = { ...new Fields(...name) };
       this.email = { ...new Fields(...email) };
@@ -56,28 +77,36 @@ module.exports = (app) => {
 
   const getUserFields = (field) => {
     let fieldValue;
-    // eslint-disable-next-line array-callback-return
     Object.entries(users).filter(([key, value]) => {
       if (key === field) { fieldValue = value; }
+      return value;
     });
     return fieldValue;
   };
 
   const getUserProps = (propField, valueField) => {
     const arr = [];
-    // eslint-disable-next-line array-callback-return
     Object.entries(users).filter(([key, value]) => {
       const prop = key;
       Object.entries(value).forEach(([key2, value2]) => {
         if (key2 === propField && value2 === valueField) arr.push(prop);
+        return value2;
       });
+      return value;
     });
     return arr;
   };
 
   // TODO check the viability of email validation in the back end
 
-  const validation = (user, insertAtLogin, checkIsNull, checkIsUnique, checkTypeOf, checkFieldLength) => {
+  const validation = (
+    user,
+    insertAtLogin,
+    checkIsNull,
+    checkIsUnique,
+    checkTypeOf,
+    checkFieldLength,
+  ) => {
     Object.entries(user).forEach(([key, value]) => {
       const userFields = getUserFields(key);
       if (checkIsNull && value === null) throw new ValidationError(`O campo ${userFields.translationToPt} é um atributo obrigatório`);
@@ -89,7 +118,6 @@ module.exports = (app) => {
       if (insertAtLogin && userFields.insertAtLogin === false) throw new ValidationError(`O campo ${userFields.translationToPt} não deve ser inserido nessa etapa`);
       if (
         (value && checkTypeOf)
-        // eslint-disable-next-line valid-typeof
         && (typeof value !== userFields.fieldType)
       ) throw new ValidationError(`O campo ${userFields.translationToPt} deve ser um(a) ${userFields.fieldType}`);
       if (
