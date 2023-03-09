@@ -4,6 +4,7 @@ const getTimestamp = require('../utils/getTimeStamp');
 const ValidationError = require('../err/ValidationsError');
 const Users = require('../models/Users');
 const FieldValidator = require('../models/FieldValidator');
+const dataValidator = require('../utils/dataValidator')
 
 module.exports = (app) => {
   const getPasswordHash = (password) => {
@@ -94,7 +95,9 @@ module.exports = (app) => {
     if (!userData.password) throw new ValidationError('O campo senha é um atributo obrigatório');
     const userDB = await findOne(user);
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
-    validation(user, true, true, false, true, false);
+
+    dataValidator(user, usersValidator, true, true, false, true, false);
+    //validation(user, true, true, false, true, false);
     userData.password = getPasswordHash(userData.password);
     return app.db('users').insert(userData, getUserProps('returnValue', true));
   };
