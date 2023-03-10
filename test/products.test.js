@@ -63,10 +63,10 @@ describe('Whe try salve products', () => {
   const templatePost = async (status, body, errorMsg) => {
     const result = await request(app)
       .post(MAIN_ROUTE)
-      .send(body)
-      .set('authorization', `bearer ${TOKEN}`);
+      .set('authorization', `bearer ${TOKEN}`)
+      .send(body);
     expect(result.status).toBe(status);
-    if (result.error) expect(result.error.message).toBe(errorMsg);
+    if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
   };
   const product = {
@@ -82,8 +82,9 @@ describe('Whe try salve products', () => {
     return arr.reduce((acc, cur) => acc + cur);
   };
   test('should return status 200', async () => {
-    const result = templatePost(200, product, '');
+    const result = await templatePost(200, product, '');
     expect(result.body).toHaveProperty('id');
+    expect(result.body.userId).toBe(10000);
     expect(result.body.name).toBe('Phone de Ouvido - Salvar');
     expect(result.body.price).toBe(199.99);
     expect(result.body).toHaveProperty('sold', false);
@@ -92,35 +93,36 @@ describe('Whe try salve products', () => {
     expect(result.body).toHaveProperty('dateCreate');
     expect(result.body).toHaveProperty('dateLastUpdate');
   });
-  test.skip('the name field should not be null', async () => {
+  test('the name field should not be null', async () => {
     await templatePost(400, { ...product, name: null }, 'O campo nome é um atributo obrigatório');
   });
-  test.skip('the price field should not be null', async () => {
+  test('the price field should not be null', async () => {
     await templatePost(400, { ...product, price: null }, 'O campo preço é um atributo obrigatório');
   });
-  test.skip('the description field should not be null', async () => {
-    await templatePost(400, { ...product, description: null }, 'O descrição nome é um atributo obrigatório');
+  test('the description field should not be null', async () => {
+    await templatePost(400, { ...product, description: null }, 'O campo descrição é um atributo obrigatório');
   });
-  test.skip('the name field should be a string', async () => {
+  test('the name field should be a string', async () => {
     await templatePost(400, { ...product, name: true }, 'O campo nome deve ser um(a) string');
   });
-  test.skip('the price field should be a number', async () => {
+  test('the price field should be a number', async () => {
     await templatePost(400, { ...product, price: 'money' }, 'O campo preço deve ser um(a) number');
   });
-  test.skip('the description field should be a string', async () => {
+  test('the description field should be a string', async () => {
     await templatePost(400, { ...product, description: true }, 'O campo descrição deve ser um(a) string');
   });
-  test.skip('the photos field should be a binary', async () => {
-    await templatePost(400, { ...product, photo: 'products photos' }, 'O campo fotos deve ser um(a) binary');
+  // TODO Create a photo entity and separate the products
+  test('the photos field should be a binary', async () => {
+    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos deve ser um(a) Object');
   });
   // TODO should save photos with others lengths
-  test.skip('the name field should not have values smaller or larger than the preset', async () => {
+  test('the name field should not have values smaller or larger than the preset', async () => {
     await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome deve ter de 0 a 255 caracteres');
   });
-  test.skip('the description field should not have values smaller than the preset', async () => {
+  test('the description field should not have values smaller than the preset', async () => {
     await templatePost(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição deve ter de 16 a 255 caracteres');
   });
-  test.skip('the description field should not have values larger than the preset', async () => {
+  test('the description field should not have values larger than the preset', async () => {
     await templatePost(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição deve ter de 16 a 255 caracteres');
   });
 });

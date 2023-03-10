@@ -38,5 +38,15 @@ module.exports = (app) => {
       return next(error);
     }
   });
+
+  router.post('/', async (req, res, next) => {
+    try {
+      const result = await app.services.product.save({ ...req.body, userId: req.user.id });
+      return res.status(200).json(result[0]);
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   return router;
 };

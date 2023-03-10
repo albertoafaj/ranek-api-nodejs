@@ -14,8 +14,8 @@ module.exports = (app) => {
 
   const strategy = new Strategy(params, async (payload, done) => {
     try {
-      const user = await app.services.user.findOne(payload);
-      if (user) return done(null, { ...payload });
+      const users = await app.services.user.findOne(payload);
+      if (users) return done(null, { id: users.id, email: users.email });
       return done(null, false);
     } catch (error) {
       return done(error, false);
