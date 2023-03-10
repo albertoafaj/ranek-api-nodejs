@@ -95,7 +95,7 @@ module.exports = (app) => {
     if (!userData.password) throw new ValidationError('O campo senha é um atributo obrigatório');
     const userDB = await findOne(user);
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
-
+    // TODO Refactor to use dataValidator component rather the validation method  
     dataValidator(user, usersValidator, true, true, false, true, false);
     //validation(user, true, true, false, true, false);
     userData.password = getPasswordHash(userData.password);

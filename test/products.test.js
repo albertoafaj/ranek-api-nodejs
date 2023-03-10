@@ -111,17 +111,18 @@ describe('Whe try salve products', () => {
   test('the description field should be a string', async () => {
     await templatePost(400, { ...product, description: true }, 'O campo descrição deve ser um(a) string');
   });
-  test.skip('the photos field should be a binary', async () => {
-    await templatePost(400, { ...product, photo: 'products photos' }, 'O campo fotos deve ser um(a) binary');
+  // TODO Create a photo entity and separate the products
+  test('the photos field should be a binary', async () => {
+    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos deve ser um(a) Object');
   });
   // TODO should save photos with others lengths
-  test.skip('the name field should not have values smaller or larger than the preset', async () => {
+  test('the name field should not have values smaller or larger than the preset', async () => {
     await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome deve ter de 0 a 255 caracteres');
   });
-  test.skip('the description field should not have values smaller than the preset', async () => {
+  test('the description field should not have values smaller than the preset', async () => {
     await templatePost(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição deve ter de 16 a 255 caracteres');
   });
-  test.skip('the description field should not have values larger than the preset', async () => {
+  test('the description field should not have values larger than the preset', async () => {
     await templatePost(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição deve ter de 16 a 255 caracteres');
   });
 });

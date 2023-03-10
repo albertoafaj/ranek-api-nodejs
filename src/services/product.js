@@ -10,8 +10,8 @@ module.exports = (app) => {
     { ...new FieldValidator('nome', 0, 255, 'string', false, false, true) },
     { ...new FieldValidator('preço', 0, 16, 'number', false, false, true) },
     { ...new FieldValidator('vendido', 0, 5, 'boolean', false, false, true) },
-    { ...new FieldValidator('descrição', 0, 255, 'string', false, false, true) },
-    { ...new FieldValidator('fotos', 0, 2147483647, 'sring', false, false, true) },
+    { ...new FieldValidator('descrição', 16, 255, 'string', false, false, true) },
+    { ...new FieldValidator('fotos', 0, 2147483647, 'Object', false, false, true) },
     { ...new FieldValidator('data de criação', 0, 255, 'string', false, true, true) },
     { ...new FieldValidator('data de atualização', 0, 255, 'string', false, false, true) },
   );
@@ -46,10 +46,8 @@ module.exports = (app) => {
   };
 
   const save = async (product) => {
-    dataValidator(product, productsValidator, false, true, false, true, false);
+    dataValidator(product, productsValidator, false, true, false, true, true);
     return await app.db('products').insert(product, '*');
-
-
   }
   return {
     findOne, save, findAll, findKeyWord,
