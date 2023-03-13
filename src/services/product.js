@@ -57,10 +57,15 @@ module.exports = (app) => {
     dataValidator(product, productsValidator, false, true, false, true, true);
     productData.dateLastUpdate = getTimestamp();
     const productDB = await findOne({ id: productData.id });
-    if (product.userId !== productDB.userId) throw new WrongResourceError();
-    return app.db('products').where({ id: product.id }).update(productData, '*');
+    if (productData.userId !== productDB.userId) throw new WrongResourceError();
+    return app.db('products').where({ id: productData.id }).update(productData, '*');
+  }
+  const remove = async (id, userId) => {
+    const productDB = await findOne({ id });
+    if (userId !== productDB.userId) throw new WrongResourceError();
+    return app.db('products').where({ id }).delete();
   }
   return {
-    findOne, save, findAll, findKeyWord, update,
+    findOne, save, findAll, findKeyWord, update, remove,
   };
 };

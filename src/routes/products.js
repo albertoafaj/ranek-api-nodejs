@@ -58,5 +58,14 @@ module.exports = (app) => {
     }
   });
 
+  router.delete('/:id', async (req, res, next) => {
+    try {
+      const result = await app.services.product.remove(parseInt(req.params.id), req.user.id);
+      return res.status(204).json(result[0]);
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   return router;
 };
