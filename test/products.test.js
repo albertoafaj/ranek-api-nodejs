@@ -134,6 +134,7 @@ describe('when try update products', () => {
       .put(`${MAIN_ROUTE}/${product}`)
       .set('authorization', `bearer ${TOKEN}`)
       .send(body);
+    console.log(result.error);
     expect(result.status).toBe(status);
     if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
@@ -145,8 +146,9 @@ describe('when try update products', () => {
     sold: true,
   };
   test('should return status 200', async () => {
-    const result = await templatePost(200, product, '', 10009);
-    expect(result.body).toBe(10009);
+    const result = await templateUpdate(200, product, '', 10009);
+
+    expect(result.body.id).toBe(10009);
     expect(result.body.userId).toBe(10000);
     expect(result.body.name).toBe('Phone de Ouvido - updated');
     expect(result.body.description).toBe('Phone de Ouvido Techno query d - updated');
@@ -178,7 +180,7 @@ describe('when try update products', () => {
     await templateUpdate(400, { ...product, description: true }, 'O campo descrição deve ser um(a) string', 10009);
   });
   test('the sold field should be a boolean', async () => {
-    await templateUpdate(400, { ...product, description: 'boolean' }, 'O campo descrição deve ser um(a) boolean', 10009);
+    await templateUpdate(400, { ...product, sold: 'boolean' }, 'O campo vendido deve ser um(a) boolean', 10009);
   });
   test('the name field should not have values smaller or larger than the preset', async () => {
     await templateUpdate(400, { ...product, name: stringGenaretor(266) }, 'O campo nome deve ter de 0 a 255 caracteres', 10009);
@@ -190,6 +192,7 @@ describe('when try update products', () => {
     await templateUpdate(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição deve ter de 16 a 255 caracteres', 10009);
   });
   test('should begoten a the user logged', async () => {
-    await templateUpdate(400, { ...product }, 'O recurso não pertence ao usuário.', 10009);
+    await templateUpdate(403, { ...product }, 'Este recurso não pertence ao usuário', 10008);
   });
 });
+

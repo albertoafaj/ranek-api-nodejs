@@ -30,6 +30,7 @@ module.exports = (app) => {
     }
   });
 
+  // TODO check whether to allow user to get products from other users
   router.get('/:id', async (req, res, next) => {
     try {
       const result = await app.services.product.findOne({ id: req.params.id });
@@ -42,6 +43,15 @@ module.exports = (app) => {
   router.post('/', async (req, res, next) => {
     try {
       const result = await app.services.product.save({ ...req.body, userId: req.user.id });
+      return res.status(200).json(result[0]);
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  router.put('/:id', async (req, res, next) => {
+    try {
+      const result = await app.services.product.update({ ...req.body, id: parseInt(req.params.id), userId: req.user.id });
       return res.status(200).json(result[0]);
     } catch (error) {
       return next(error);
