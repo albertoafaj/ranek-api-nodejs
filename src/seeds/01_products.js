@@ -93,7 +93,7 @@ exports.seed = async (knex) => {
     },
     {
       id: 10009,
-      userId: 10000,
+      userId: 10001,
       name: 'Phone de Ouvido',
       price: 3999.99,
       description: 'Phone de Ouvido Techno query d',
