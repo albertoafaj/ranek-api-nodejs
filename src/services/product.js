@@ -1,6 +1,8 @@
 const Products = require('../models/Products');
 const FieldValidator = require('../models/FieldValidator');
-const dataValidator = require('../utils/dataValidator')
+const dataValidator = require('../utils/dataValidator');
+const getTimestamp = require('../utils/getTimeStamp');
+const WrongResourceError = require('../err/WrongResourceError');
 
 module.exports = (app) => {
 
@@ -49,7 +51,16 @@ module.exports = (app) => {
     dataValidator(product, productsValidator, false, true, false, true, true);
     return await app.db('products').insert(product, '*');
   }
+
+  const update = async (product) => {
+    const productData = product;
+    dataValidator(product, productsValidator, false, true, false, true, true);
+    productData.dateLastUpdate = getTimestamp();
+    const productDB = await findOne({ id: productData.id });
+    if (product.userId !== productDB.userId) throw new WrongResourceError();
+    return app.db('products').where({ id: product.id }).update(productData, '*');
+  }
   return {
-    findOne, save, findAll, findKeyWord,
+    findOne, save, findAll, findKeyWord, update,
   };
 };
