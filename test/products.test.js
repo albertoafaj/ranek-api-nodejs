@@ -198,17 +198,18 @@ describe('when try update products', () => {
 
 describe('when try delete a product', () => {
   test('should remove a product', async () => {
-    const result = request(app)
+    const result = await request(app)
       .delete(`${MAIN_ROUTE}/10009`)
       .set('authorization', `bearer ${TOKEN}`);
+    console.log(result.error.message);
     expect(result.status).toBe(204);
   });
   test('should not remove a product from another user', async () => {
-    const result = request(app)
+    const result = await request(app)
       .delete(`${MAIN_ROUTE}/10008`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(403);
-    expect(result.error.message).toBe('Este recurso não pertence ao usuário');
+    expect(result.body.error).toBe('Este recurso não pertence ao usuário');
   });
 
 });
