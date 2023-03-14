@@ -1,4 +1,4 @@
-exports.up = (knex) => knex.schema.createTable('address', (t) => {
+exports.up = (knex) => knex.schema.createTable('addresses', (t) => {
   t.increments('id').primary();
   t.timestamp('dateCreate', { useTz: true }).notNull().defaultTo(knex.fn.now());
   t.timestamp('dateLastUpdate', { useTz: true });
@@ -10,4 +10,4 @@ exports.up = (knex) => knex.schema.createTable('address', (t) => {
   t.string('district', 50);
 });
 
-exports.down = (knex) => knex.schema.dropTable('address');
+exports.down = (knex) => knex.schema.dropTable('addresses');

@@ -1,4 +1,4 @@
-class Address {
+class Addresses {
   constructor(
     id,
     zipCode,
@@ -20,11 +20,6 @@ class Address {
     this.dateCreate = dateCreate;
     this.dateLastUpdate = dateLastUpdate;
   }
-
-  constructor(id) {
-    this.id = id;
-  }
-
 }
 
-module.exports = Address;
+module.exports = Addresses;
