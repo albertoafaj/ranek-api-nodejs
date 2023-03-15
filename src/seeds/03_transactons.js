@@ -24,6 +24,13 @@ exports.seed = async (knex) => {
       dateCreate: knex.fn.now(),
       dateLastUpdate: null,
     },
+    {
+      id: 10001,
+      email: 'user_ransactions02@email.com',
+      password: '$2a$10$S4VRH2lhQPSuwysEjJpYUu/eG4Jc1Bg5LF7J7OgsTN3H3H4vD3OYO',
+      status: true,
+      dateCreate: knex.fn.now(),
+    },
   ]);
   await knex('products').insert([
     {
@@ -32,6 +39,24 @@ exports.seed = async (knex) => {
       name: 'Computador transactions',
       price: 6999.99,
       description: 'Note DELL I7',
+      dateCreate: knex.fn.now(),
+      dateLastUpdate: null,
+    },
+    {
+      id: 10001,
+      userId: 10001,
+      name: 'Notebook transactions',
+      price: 5999.99,
+      description: 'DELL I7',
+      dateCreate: knex.fn.now(),
+      dateLastUpdate: null,
+    },
+    {
+      id: 10002,
+      userId: 10001,
+      name: 'Smartphone transactions',
+      price: 1999.99,
+      description: 'Samsung I7',
       dateCreate: knex.fn.now(),
       dateLastUpdate: null,
     },
