@@ -1,10 +1,10 @@
+const ValidationsError = require('../err/ValidationsError');
 const Addresses = require('../models/Addresses');
 const FieldValidator = require('../models/FieldValidator');
 const dataValidator = require('../utils/dataValidator');
 const getTimestamp = require('../utils/getTimeStamp');
 
 module.exports = (app) => {
-
   const addressValidator = new Addresses(
     { ...new FieldValidator('id', 0, 2147483647, 'number', true, true, true) },
     { ...new FieldValidator('código postal', 8, 8, 'number', false, false, true) },
@@ -21,24 +21,23 @@ module.exports = (app) => {
     const result = await app.db('addresses').where(filter).first();
     return result;
   };
-  // const findAll = (filter) => app.db('products').where(filter).select();
 
   const save = async (address) => {
-    dataValidator(address, addressValidator, false, true, false, true, true);
+    dataValidator(address, 'endereço', addressValidator, false, true, false, true, true);
     return app.db('addresses').insert(address, '*');
-  }
+  };
 
   const update = async (address) => {
     const addressData = address;
-    console.log('addressData', addressData);
-    dataValidator(address, addressValidator, false, true, false, true, true);
-    console.log('addressData', addressData);
+    dataValidator(address, 'endereço', addressValidator, false, true, false, true, true);
     addressData.dateLastUpdate = getTimestamp();
     return app.db('addresses').where({ id: addressData.id }).update(addressData, '*');
-  }
+  };
   const remove = async (id) => {
+    const haveTransaction = await app.db('transactions').where({ addressId: id }).select().first();
+    if (haveTransaction) throw new ValidationsError('O endereço não pode ser excluído pois pertence a uma transação');
     return app.db('addresses').where({ id }).delete();
-  }
+  };
   return {
     findOne, save, update, remove,
   };

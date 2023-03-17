@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const qs = require('qs');
 
 module.exports = (app) => {
   const router = Router();
@@ -24,7 +23,8 @@ module.exports = (app) => {
 
   router.put('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.address.update({ ...req.body, id: parseInt(req.params.id) });
+      const result = await app.services.address
+        .update({ ...req.body, id: parseInt(req.params.id, 10) });
       return res.status(200).json(result[0]);
     } catch (error) {
       return next(error);
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
   router.delete('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.address.remove(parseInt(req.params.id));
+      const result = await app.services.address.remove(parseInt(req.params.id, 10));
       return res.status(204).json(result[0]);
     } catch (error) {
       return next(error);

@@ -6,7 +6,7 @@ const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJfcHJvZHVj
 
 const stringGenaretor = (length) => {
   const arr = [];
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     arr.push('A');
   }
   return arr.reduce((acc, cur) => acc + cur);
@@ -134,7 +134,6 @@ describe('when try update products', () => {
       .put(`${MAIN_ROUTE}/${product}`)
       .set('authorization', `bearer ${TOKEN}`)
       .send(body);
-    console.log(result.error);
     expect(result.status).toBe(status);
     if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
@@ -201,7 +200,6 @@ describe('when try delete a product', () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10009`)
       .set('authorization', `bearer ${TOKEN}`);
-    console.log(result.error.message);
     expect(result.status).toBe(204);
   });
   test('should not remove a product from another user', async () => {
@@ -211,5 +209,4 @@ describe('when try delete a product', () => {
     expect(result.status).toBe(403);
     expect(result.body.error).toBe('Este recurso não pertence ao usuário');
   });
-
 });

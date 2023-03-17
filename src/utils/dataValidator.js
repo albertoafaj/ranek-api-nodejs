@@ -1,7 +1,17 @@
 const ValidationError = require('../err/ValidationsError');
 
+const getDataFields = (field, dataValidator) => {
+  let fieldValue;
+  Object.entries(dataValidator).filter(([key, value]) => {
+    if (key === field) { fieldValue = value; }
+    return value;
+  });
+  return fieldValue;
+};
+
 const validation = (
   data,
+  name,
   validator,
   insertAtLogin,
   checkIsNull,
@@ -9,7 +19,10 @@ const validation = (
   checkTypeOf,
   checkFieldLength,
 ) => {
+  let dataLength = 0;
   Object.entries(data).forEach(([key, value]) => {
+    if (key) dataLength += 1;
+
     const dataFields = getDataFields(key, validator);
     if (checkIsNull && value === null) throw new ValidationError(`O campo ${dataFields.translationToPt} é um atributo obrigatório`);
     const fieldLength = value.toString().length;
@@ -32,15 +45,7 @@ const validation = (
       && (fieldLength < dataFields.minFieldLength || fieldLength > dataFields.maxFieldLength)
     ) throw new ValidationError(`O campo ${dataFields.translationToPt} deve ter de ${dataFields.minFieldLength} a ${dataFields.maxFieldLength} caracteres`);
   });
-};
-
-const getDataFields = (field, dataValidator) => {
-  let fieldValue;
-  Object.entries(dataValidator).filter(([key, value]) => {
-    if (key === field) { fieldValue = value; }
-    return value;
-  });
-  return fieldValue;
+  if (dataLength === 0) throw new ValidationError(`O objeto ${name} está vazio, favor preencher corretamente`);
 };
 
 module.exports = validation;

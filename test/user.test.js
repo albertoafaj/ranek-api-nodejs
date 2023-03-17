@@ -7,6 +7,7 @@ const MAIN_ROTE = '/v1/users';
 let user;
 
 beforeAll(async () => {
+  await app.db('transactions').del();
   await app.db('products').del();
   await app.db('users').del();
   const result = await app.services.user.save({
