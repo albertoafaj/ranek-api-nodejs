@@ -4,8 +4,9 @@ const app = require('../src/app');
 const MAIN_ROTE = '/auth';
 
 beforeAll(async () => {
-  await app.db('products').del();
-  await app.db('users').del();
+  await app.db.migrate.rollback();
+  await app.db.migrate.latest();
+  await app.db.seed.run();
 });
 
 describe('when try loggin', () => {

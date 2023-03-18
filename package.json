@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint src/** test/** --fix",
-    "secure-mode": "set NODE_ENV=test&& jest --watch --verbose=true"
+    "secure-mode": "set NODE_ENV=test&& jest --runInBand --watch --verbose=true"
   },
   "author": "Albertto Fernandes de Araújo Junior",
   "license": "ISC",
