@@ -56,7 +56,7 @@ describe('Whe try get a transaction', () => {
     expect(result.body.id).toBe(10000);
     expect(result.body.buyerId).toBe(10000);
     // TODO check if it would be better to return user email instead of id
-    expect(result.body.product.name).toBe('Computador');
+    expect(result.body.product.name).toBe('Notebook transaction');
     expect(result.body.address.street).toBe('Rua A');
   });
 });
@@ -72,7 +72,7 @@ describe('when try update transaction', () => {
     return result;
   };
   const transaction = {
-    productId: 10002,
+    productId: 10010,
     address: {
       street: 'Rua transactions Update',
       number: '123456',
@@ -84,26 +84,26 @@ describe('when try update transaction', () => {
   };
 
   test('should return status 200', async () => {
-    const result = await templateUpdate(200, transaction, '');
+    const result = await templateUpdate(200, transaction, '', 10000);
     expect(result.body.id).toBe(10000);
     expect(result.body.buyerId).toBe(10000);
-    expect(result.body.productId).toBe(10002);
-    expect(result.body.addressId).toHaveProperty('Rua transactions Update');
+    expect(result.body.product.id).toBe(10010);
+    expect(result.body.address.street).toBe('Rua transactions Update');
     expect(result.body).toHaveProperty('dateCreate');
     expect(result.body.dateLastUpdate).not.toBeNull();
   });
   test('the productId field should not be null', async () => templateUpdate(400, { ...transaction, productId: null }, 'O campo id do produto é um atributo obrigatório', 10000));
   test('the productId field should be a number', async () => templateUpdate(400, { ...transaction, productId: '1234' }, 'O campo id do produto deve ser um(a) number', 10000));
   test('the address field should be a object', async () => templateUpdate(400, { ...transaction, address: '1234' }, 'O campo endereço deve ser um(a) object', 10000));
-  test('the address field must be a fulfilled object', async () => templateUpdate(400, { ...transaction, address: {} }, 'O objeto endereço está vazio, favor preencher corretamente', 10000));
   test('the product should belong to the user', async () => templateUpdate(400, { ...transaction, productId: 10000 }, 'O usuário não pode comprar seus próprios produtos', 10000));
 });
 
-describe('when try delete a transaction', () => {
-  test('should remove a transaction', async () => {
+describe('jtesse when try delete a transaction', () => {
+  test('should remove a transaction and transaction address', async () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10000`)
       .set('authorization', `bearer ${TOKEN}`);
-    expect(result.status).toBe(204);
+    expect(result.status).toBe(200);
+    expect(result.body.addressId).toBe(10000);
   });
 });

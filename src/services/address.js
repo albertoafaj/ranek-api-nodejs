@@ -29,7 +29,7 @@ module.exports = (app) => {
 
   const update = async (address) => {
     const addressData = address;
-    dataValidator(address, 'endereço', addressValidator, false, true, false, true, true);
+    dataValidator(addressData, 'endereço', addressValidator, false, true, false, true, true);
     addressData.dateLastUpdate = getTimestamp();
     return app.db('addresses').where({ id: addressData.id }).update(addressData, '*');
   };

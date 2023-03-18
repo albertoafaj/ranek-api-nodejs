@@ -51,9 +51,17 @@ module.exports = (app) => {
 
   router.put('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.transaction
-        .update({ ...req.body, id: parseInt(req.params.id, 10) });
-      return res.status(200).json(result[0]);
+      if (typeof req.body.address !== 'object') throw new ValidationsError('O campo endereço deve ser um(a) object');
+      const {
+        id, addressId,
+      } = await app.services.transaction.findOne({ id: req.params.id });
+      const [address] = await app.services.address.update({ ...req.body.address, id: addressId });
+      const product = await app.services.product.findOne({ id: req.body.productId });
+      const [result] = await app.services.transaction.update({
+        id, buyerId: req.user.id, productId: req.body.productId, addressId,
+      }, product.userId);
+      const response = setResponse(result, product, address);
+      return res.status(200).json(response);
     } catch (error) {
       return next(error);
     }
@@ -61,8 +69,16 @@ module.exports = (app) => {
 
   router.delete('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.transaction.remove(parseInt(req.params.id, 10));
-      return res.status(204).json(result[0]);
+      let delAddress;
+      let response;
+      const {
+        id,
+        addressId,
+      } = await app.services.transaction.findOne({ id: req.params.id });
+      const delTransaction = await app.services.transaction.remove(id);
+      if (delTransaction > 0) delAddress = await app.services.address.remove(addressId);
+      if (delAddress > 0) response = { addressId };
+      return res.status(200).json(response);
     } catch (error) {
       return next(error);
     }

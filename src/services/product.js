@@ -3,6 +3,7 @@ const FieldValidator = require('../models/FieldValidator');
 const dataValidator = require('../utils/dataValidator');
 const getTimestamp = require('../utils/getTimeStamp');
 const WrongResourceError = require('../err/WrongResourceError');
+const ValidationsError = require('../err/ValidationsError');
 
 module.exports = (app) => {
   const productsValidator = new Products(
@@ -61,7 +62,9 @@ module.exports = (app) => {
     return app.db('products').where({ id: productData.id }).update(productData, '*');
   };
   const remove = async (id, userId) => {
+    const transaction = await app.services.transaction.findOne({ productId: id });
     const productDB = await findOne({ id });
+    if (transaction) throw new ValidationsError('Essa produto possui transações associadas');
     if (userId !== productDB.userId) throw new WrongResourceError();
     return app.db('products').where({ id }).delete();
   };

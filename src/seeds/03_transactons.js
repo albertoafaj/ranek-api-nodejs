@@ -1,16 +1,4 @@
 exports.seed = async (knex) => {
-  await knex('transactions').del();
-  await knex('transactions').insert([
-    {
-      id: 10000,
-      buyerId: 10000,
-      productId: 10000,
-      addressId: 10000,
-      dateCreate: knex.fn.now(),
-      dateLastUpdate: null,
-    },
-
-  ]);
   await knex('products').insert([
     {
       id: 10010,
@@ -19,6 +7,17 @@ exports.seed = async (knex) => {
       price: 6999.99,
       description: 'DELL I7',
       dateCreate: knex.fn.now(),
+    },
+
+  ]);
+  await knex('transactions').insert([
+    {
+      id: 10000,
+      buyerId: 10000,
+      productId: 10010,
+      addressId: 10000,
+      dateCreate: knex.fn.now(),
+      dateLastUpdate: null,
     },
 
   ]);

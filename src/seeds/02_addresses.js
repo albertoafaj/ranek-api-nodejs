@@ -1,6 +1,5 @@
 exports.seed = async (knex) => {
   // Deletes ALL existing entries
-  await knex('addresses').del();
   await knex('addresses').insert([
     {
       id: 10000,

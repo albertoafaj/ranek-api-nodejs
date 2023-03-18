@@ -29,7 +29,7 @@ describe('Whe try get products', () => {
   };
   test('should list all products', async () => {
     const result = await templateGet('', 200, '');
-    expect(result.body.length).toBe(10);
+    expect(result.body.length).toBe(11);
   });
   test('should list by id', async () => {
     const result = await templateGet(10000, 200, '');
@@ -56,14 +56,14 @@ describe('Whe try get products', () => {
   });
   test('should divide the query into 9 products per page if the limit is not informed', async () => {
     const result = await templateGet('?page=2', 200, '');
-    expect(result.body).toHaveLength(1);
+    expect(result.body).toHaveLength(2);
     expect(result.body[0].id).toBe(10009);
   });
 
   test('should return in header field x-total-count', async () => {
     const result = await templateGet('?page=2&limit=2', 200, '');
     expect(result.header).toHaveProperty('x-total-count');
-    expect(result.header['x-total-count']).toBe('10');
+    expect(result.header['x-total-count']).toBe('11');
   });
 });
 
@@ -95,36 +95,36 @@ describe('Whe try salve products', () => {
     expect(result.body).toHaveProperty('dateLastUpdate');
   });
   test('the name field should not be null', async () => {
-    await templatePost(400, { ...product, name: null }, 'O campo nome é um atributo obrigatório');
+    await templatePost(400, { ...product, name: null }, 'O campo nome do produto é um atributo obrigatório');
   });
   test('the price field should not be null', async () => {
-    await templatePost(400, { ...product, price: null }, 'O campo preço é um atributo obrigatório');
+    await templatePost(400, { ...product, price: null }, 'O campo preço do produto é um atributo obrigatório');
   });
   test('the description field should not be null', async () => {
-    await templatePost(400, { ...product, description: null }, 'O campo descrição é um atributo obrigatório');
+    await templatePost(400, { ...product, description: null }, 'O campo descrição do produto é um atributo obrigatório');
   });
   test('the name field should be a string', async () => {
-    await templatePost(400, { ...product, name: true }, 'O campo nome deve ser um(a) string');
+    await templatePost(400, { ...product, name: true }, 'O campo nome do produto deve ser um(a) string');
   });
   test('the price field should be a number', async () => {
-    await templatePost(400, { ...product, price: 'money' }, 'O campo preço deve ser um(a) number');
+    await templatePost(400, { ...product, price: 'money' }, 'O campo preço do produto deve ser um(a) number');
   });
   test('the description field should be a string', async () => {
-    await templatePost(400, { ...product, description: true }, 'O campo descrição deve ser um(a) string');
+    await templatePost(400, { ...product, description: true }, 'O campo descrição do produto deve ser um(a) string');
   });
   // TODO Create a photo entity and separate the products
   test('the photos field should be a binary', async () => {
-    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos deve ser um(a) Object');
+    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos do produto deve ser um(a) Object');
   });
   // TODO should save photos with others lengths
   test('the name field should not have values smaller or larger than the preset', async () => {
-    await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome deve ter de 0 a 255 caracteres');
+    await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome do produto deve ter de 0 a 255 caracteres');
   });
   test('the description field should not have values smaller than the preset', async () => {
-    await templatePost(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição deve ter de 16 a 255 caracteres');
+    await templatePost(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres');
   });
   test('the description field should not have values larger than the preset', async () => {
-    await templatePost(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição deve ter de 16 a 255 caracteres');
+    await templatePost(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres');
   });
 });
 
@@ -158,37 +158,37 @@ describe('when try update products', () => {
     expect(result.body).not.toBeNull();
   });
   test('the name field should not be null', async () => {
-    await templateUpdate(400, { ...product, name: null }, 'O campo nome é um atributo obrigatório', 10009);
+    await templateUpdate(400, { ...product, name: null }, 'O campo nome do produto é um atributo obrigatório', 10009);
   });
   test('the name field should not be null', async () => {
-    await templateUpdate(400, { ...product, price: null }, 'O campo preço é um atributo obrigatório', 10009);
+    await templateUpdate(400, { ...product, price: null }, 'O campo preço do produto é um atributo obrigatório', 10009);
   });
   test('the name field should not be null', async () => {
-    await templateUpdate(400, { ...product, sold: null }, 'O campo vendido é um atributo obrigatório', 10009);
+    await templateUpdate(400, { ...product, sold: null }, 'O campo vendido do produto é um atributo obrigatório', 10009);
   });
   test('the name field should not be null', async () => {
-    await templateUpdate(400, { ...product, description: null }, 'O campo descrição é um atributo obrigatório', 10009);
+    await templateUpdate(400, { ...product, description: null }, 'O campo descrição do produto é um atributo obrigatório', 10009);
   });
   test('the name field should be a string', async () => {
-    await templateUpdate(400, { ...product, name: true }, 'O campo nome deve ser um(a) string', 10009);
+    await templateUpdate(400, { ...product, name: true }, 'O campo nome do produto deve ser um(a) string', 10009);
   });
   test('the price field should be a number', async () => {
-    await templateUpdate(400, { ...product, price: 'money' }, 'O campo preço deve ser um(a) number', 10009);
+    await templateUpdate(400, { ...product, price: 'money' }, 'O campo preço do produto deve ser um(a) number', 10009);
   });
   test('the description field should be a string', async () => {
-    await templateUpdate(400, { ...product, description: true }, 'O campo descrição deve ser um(a) string', 10009);
+    await templateUpdate(400, { ...product, description: true }, 'O campo descrição do produto deve ser um(a) string', 10009);
   });
   test('the sold field should be a boolean', async () => {
-    await templateUpdate(400, { ...product, sold: 'boolean' }, 'O campo vendido deve ser um(a) boolean', 10009);
+    await templateUpdate(400, { ...product, sold: 'boolean' }, 'O campo vendido do produto deve ser um(a) boolean', 10009);
   });
   test('the name field should not have values smaller or larger than the preset', async () => {
-    await templateUpdate(400, { ...product, name: stringGenaretor(266) }, 'O campo nome deve ter de 0 a 255 caracteres', 10009);
+    await templateUpdate(400, { ...product, name: stringGenaretor(266) }, 'O campo nome do produto deve ter de 0 a 255 caracteres', 10009);
   });
   test('the description field should not have values smaller than the preset', async () => {
-    await templateUpdate(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição deve ter de 16 a 255 caracteres', 10009);
+    await templateUpdate(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres', 10009);
   });
   test('the description field should not have values larger than the preset', async () => {
-    await templateUpdate(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição deve ter de 16 a 255 caracteres', 10009);
+    await templateUpdate(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres', 10009);
   });
   test('should begoten a the user logged', async () => {
     await templateUpdate(403, { ...product }, 'Este recurso não pertence ao usuário', 10008);
@@ -204,9 +204,16 @@ describe('when try delete a product', () => {
   });
   test('should not remove a product from another user', async () => {
     const result = await request(app)
-      .delete(`${MAIN_ROUTE}/10008`)
+      .delete(`${MAIN_ROUTE}/10007`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(403);
     expect(result.body.error).toBe('Este recurso não pertence ao usuário');
+  });
+  test('should not remove a product that belongs to a transaction', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/10008`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe('Essa produto possui transações associadas');
   });
 });

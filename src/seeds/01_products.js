@@ -1,5 +1,7 @@
 exports.seed = async (knex) => {
   // Deletes ALL existing entries
+  await knex('transactions').del();
+  await knex('addresses').del();
   await knex('products').del();
   await knex('users').del();
   await knex('users').insert([
@@ -77,7 +79,7 @@ exports.seed = async (knex) => {
     },
     {
       id: 10007,
-      userId: 10000,
+      userId: 10001,
       name: 'Mouse',
       price: 3999.99,
       description: 'Mouse ',
@@ -98,6 +100,29 @@ exports.seed = async (knex) => {
       price: 3999.99,
       description: 'Phone de Ouvido Techno query d',
       dateCreate: knex.fn.now(),
+    },
+  ]);
+  await knex('addresses').insert([
+    {
+      id: 10002,
+      dateCreate: knex.fn.now(),
+      dateLastUpdate: null,
+      street: 'Rua C',
+      number: '1234',
+      city: 'Cidade',
+      state: 'BA',
+      zipCode: 12345678,
+      district: 'Bairro',
+    },
+  ]);
+  await knex('transactions').insert([
+    {
+      id: 10001,
+      buyerId: 10000,
+      productId: 10008,
+      addressId: 10002,
+      dateCreate: knex.fn.now(),
+      dateLastUpdate: null,
     },
   ]);
 };

@@ -25,9 +25,10 @@ module.exports = (app) => {
     return app.db('transactions').insert(transaction, '*');
   };
 
-  const update = async (transaction) => {
+  const update = async (transaction, productUserId) => {
     const transactionData = transaction;
-    dataValidator(transaction, 'transação', transactionValidator, false, true, false, true, true);
+    dataValidator(transactionData, 'transação', transactionValidator, false, true, false, true, true);
+    if (transactionData.buyerId === productUserId) throw new ValidationsError('O usuário não pode comprar seus próprios produtos');
     transactionData.dateLastUpdate = getTimestamp();
     return app.db('transactions').where({ id: transactionData.id }).update(transactionData, '*');
   };
