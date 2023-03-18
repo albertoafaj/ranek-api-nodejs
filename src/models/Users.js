@@ -28,7 +28,6 @@ class Users {
     this.dateCreate = dateCreate;
     this.dateLastUpdate = dateLastUpdate;
   }
-
 }
 
 module.exports = Users;

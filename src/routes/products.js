@@ -33,7 +33,7 @@ module.exports = (app) => {
   // TODO check whether to allow user to get products from other users
   router.get('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.product.findOne({ id: req.params.id });
+      const result = await app.services.product.findOne({ id: parseInt(req.params.id, 10) });
       return res.status(200).json(result);
     } catch (error) {
       return next(error);
@@ -51,7 +51,9 @@ module.exports = (app) => {
 
   router.put('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.product.update({ ...req.body, id: parseInt(req.params.id), userId: req.user.id });
+      const result = await app.services.product.update({
+        ...req.body, id: parseInt(req.params.id, 10), userId: req.user.id,
+      });
       return res.status(200).json(result[0]);
     } catch (error) {
       return next(error);
@@ -60,7 +62,7 @@ module.exports = (app) => {
 
   router.delete('/:id', async (req, res, next) => {
     try {
-      const result = await app.services.product.remove(parseInt(req.params.id), req.user.id);
+      const result = await app.services.product.remove(parseInt(req.params.id, 10), req.user.id);
       return res.status(204).json(result[0]);
     } catch (error) {
       return next(error);

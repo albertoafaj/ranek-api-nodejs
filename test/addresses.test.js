@@ -6,7 +6,7 @@ const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJfcHJvZHVj
 
 const stringGenaretor = (length) => {
   const arr = [];
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     arr.push('A');
   }
   return arr.reduce((acc, cur) => acc + cur);
@@ -33,7 +33,6 @@ describe('Whe try save address', () => {
       .post(MAIN_ROUTE)
       .set('authorization', `bearer ${TOKEN}`)
       .send(body);
-    console.log(result.error.message);
     expect(result.status).toBe(status);
     if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
@@ -83,8 +82,6 @@ describe('when try update address', () => {
       .put(`${MAIN_ROUTE}/${adressId}`)
       .set('authorization', `bearer ${TOKEN}`)
       .send(body);
-    console.log(result.error.message);
-    console.log(result.body);
     expect(result.status).toBe(status);
     if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
@@ -126,15 +123,20 @@ describe('when try update address', () => {
   test('the number should not have values smaller or larger than the preset', () => templateUpdate(400, { ...address, number: stringGenaretor(9) }, 'O campo número deve ter de 0 a 8 caracteres', 10000));
   test('the city should not have values smaller or larger than the preset', () => templateUpdate(400, { ...address, city: stringGenaretor(51) }, 'O campo cidade deve ter de 0 a 50 caracteres', 10000));
   test('the district should not have values smaller or larger than the preset', () => templateUpdate(400, { ...address, district: stringGenaretor(51) }, 'O campo bairro deve ter de 0 a 50 caracteres', 10000));
-
 });
 
-describe('when try delete a address', () => {
+describe('jtesse when try delete a address', () => {
   test('should remove a address', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/10001`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(204);
+  });
+  test('should not remove an address that belongs to a transaction', async () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10000`)
       .set('authorization', `bearer ${TOKEN}`);
-    console.log(result.error.message);
-    expect(result.status).toBe(204);
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe('O endereço não pode ser excluído pois pertence a uma transação');
   });
 });
