@@ -9,7 +9,8 @@ class Photos {
     filename,
     path,
     size,
-    url,
+    src,
+    title,
     dateCreate,
   ) {
     this.id = id;
@@ -21,7 +22,8 @@ class Photos {
     this.filename = filename;
     this.path = path;
     this.size = size;
-    this.url = url;
+    this.src = src;
+    this.title = title;
     this.dateCreate = dateCreate;
   }
 }
