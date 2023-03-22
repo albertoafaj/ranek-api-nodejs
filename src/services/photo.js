@@ -1,6 +1,7 @@
 const FieldValidator = require('../models/FieldValidator');
 const dataValidator = require('../utils/dataValidator');
 const Photos = require('../models/Photos');
+const ValidationsError = require('../err/ValidationsError');
 
 module.exports = (app) => {
   const photoValidator = new Photos(
@@ -17,9 +18,24 @@ module.exports = (app) => {
     { ...new FieldValidator('data de criação do produto', 0, 255, 'string', false, true, true) },
   );
 
-  const save = async (photo) => {
-    dataValidator(photo, 'foto', photoValidator, false, true, false, true, true);
-    return app.db('photos').insert(photo, '*');
+  const save = async (photos, titles) => {
+    const titleList = Object.values(titles).map((title) => title);
+    // console.log('titleList', titleList);
+    if (photos.length > titleList.length) throw new ValidationsError(`Foi(Foram) enviada(s) ${photos.length} foto(s) e informado apenas ${titleList.length} título(os)`);
+    const body = photos.map((photo, index) => ({ ...photo, title: titleList[index] }));
+    // console.log('body', body);
+    let response = [];
+    body.forEach((photo) => {
+      dataValidator(photo, 'foto', photoValidator, false, true, false, true, true);
+      response.push(app.db('photos').insert(photo, '*'));
+    });
+    /*     response = await Promise.all(response).then((data) => {
+          console.log('data', data);
+          return data;
+        }); */
+    response = await Promise.all(response).then((data) => data.map((el) => el[0]));
+    // console.log('response', response);
+    return response;
   };
 
   return {
