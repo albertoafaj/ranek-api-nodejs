@@ -113,9 +113,13 @@ describe('Whe try salve products', () => {
     await templatePost(400, { ...product, description: true }, 'O campo descrição do produto deve ser um(a) string');
   });
   // TODO Create a photo entity and separate the products
-  test('the photos field should be a binary', async () => {
-    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos do produto deve ser um(a) Object');
+  test('jtesse the photos field should be a object', async () => {
+    await templatePost(400, { ...product, photos: { file: 'photo.jpeg' } }, 'O campo fotos do produto deve ser um(a) Object');
   });
+  test('the photos field should be a object', async () => {
+    await templatePost(400, { ...product, photos: 'photo.jpeg' }, 'O campo fotos do produto deve ser um(a) Object');
+  });
+
   // TODO should save photos with others lengths
   test('the name field should not have values smaller or larger than the preset', async () => {
     await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome do produto deve ter de 0 a 255 caracteres');

@@ -13,7 +13,7 @@ module.exports = (app) => {
     { ...new FieldValidator('preço do produto', 0, 16, 'number', false, false, true) },
     { ...new FieldValidator('vendido do produto', 0, 5, 'boolean', false, false, true) },
     { ...new FieldValidator('descrição do produto', 16, 255, 'string', false, false, true) },
-    { ...new FieldValidator('fotos do produto', 0, 2147483647, 'Object', false, false, true) },
+    { ...new FieldValidator('fotos do produto', 0, 2147483647, 'object', false, false, true) },
     { ...new FieldValidator('data de criação do produto', 0, 255, 'string', false, true, true) },
     { ...new FieldValidator('data de atualização do produto', 0, 255, 'string', false, false, true) },
   );
