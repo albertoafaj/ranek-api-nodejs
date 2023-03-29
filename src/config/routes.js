@@ -2,7 +2,7 @@ const express = require('express');
 
 module.exports = (app) => {
   app.use('/auth', app.routes.auth);
-  app.use('/uploads', express.static('tmp/uploads'));
+  app.use('/uploads', express.static('uploads'));
   const protectRouter = express.Router();
   protectRouter.use('/users', app.routes.users);
   protectRouter.use('/products', app.routes.products);

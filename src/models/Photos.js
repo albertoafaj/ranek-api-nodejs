@@ -7,9 +7,8 @@ class Photos {
     mimetype,
     destination,
     filename,
-    path,
     size,
-    src,
+    url,
     title,
     dateCreate,
   ) {
@@ -20,9 +19,8 @@ class Photos {
     this.mimetype = mimetype;
     this.destination = destination;
     this.filename = filename;
-    this.path = path;
     this.size = size;
-    this.src = src;
+    this.url = url;
     this.title = title;
     this.dateCreate = dateCreate;
   }
