@@ -1,5 +1,10 @@
 const { Router } = require('express');
 const qs = require('qs');
+const multer = require('multer');
+const multerConfig = require('../config/multer');
+const Products = require('../models/Products');
+
+const updload = multer(multerConfig).array('files');
 
 module.exports = (app) => {
   const router = Router();
@@ -40,9 +45,24 @@ module.exports = (app) => {
     }
   });
 
-  router.post('/', async (req, res, next) => {
+  router.post('/', updload, async (req, res, next) => {
     try {
-      const result = await app.services.product.save({ ...req.body, userId: req.user.id });
+      const product = new Products();
+      const {
+        id, dateCreate, dateLastUpdate, sold, photos, ...productFields
+      } = product;
+      Object.entries(req.body).forEach(([key, value]) => {
+        try {
+          productFields[key] = JSON.parse(value);
+        } catch (error) {
+          productFields[key] = value;
+        }
+      });
+      if (req.files !== undefined) {
+        productFields.photos = await app.services.photo.save(req.files, req.body.photoTitles);
+      }
+      const { photoTitles, ...saveProduct } = productFields;
+      const result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
       return res.status(200).json(result[0]);
     } catch (error) {
       return next(error);

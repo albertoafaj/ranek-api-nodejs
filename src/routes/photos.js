@@ -13,7 +13,7 @@ module.exports = (app) => {
   router.post('/', updload, async (req, res, next) => {
     const { files } = req;
     try {
-      const result = await app.services.photo.save(req.files, req.body);
+      const result = await app.services.photo.save(req.files, req.body.photoTitles);
       files.forEach((file) => {
         const tempPath = `${path.resolve(__dirname, '..', '..', 'tmp', 'uploads')}/${file.filename}`;
         const finalPath = `${path.resolve(__dirname, '..', '..', 'uploads')}/${file.filename}`;
@@ -45,12 +45,10 @@ module.exports = (app) => {
   router.delete('/:id', async (req, res, next) => {
     try {
       const { url } = await app.services.photo.findOne({ id: parseInt(req.params.id, 10) });
-      console.log(url);
       const result = await app.services.photo.remove({ id: parseInt(req.params.id, 10) });
       if (result === 1) {
         fs.unlink(url, () => { });
       }
-      console.log('result', result);
       return res.status(204).json();
     } catch (error) {
       return next(error);

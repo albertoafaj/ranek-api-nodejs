@@ -50,7 +50,11 @@ module.exports = (app) => {
 
   const save = async (product) => {
     dataValidator(product, 'produto', productsValidator, false, true, false, true, true);
-    return app.db('products').insert(product, '*');
+    const productData = product;
+    if (productData.photos !== null) {
+      productData.photos = JSON.stringify(productData.photos);
+    }
+    return app.db('products').insert(productData, '*');
   };
 
   const update = async (product) => {

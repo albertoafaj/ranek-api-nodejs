@@ -82,7 +82,7 @@ describe('Whe try salve products', () => {
     price: 199.99,
     description: 'Phone de Ouvido - Teste salvar produtos',
   };
-  test('should return status 200', async () => {
+  test('jtesse should return status 200', async () => {
     const result = await templatePost(200, product, '');
     expect(result.body).toHaveProperty('id');
     expect(result.body.userId).toBe(10000);
@@ -112,12 +112,11 @@ describe('Whe try salve products', () => {
   test('the description field should be a string', async () => {
     await templatePost(400, { ...product, description: true }, 'O campo descrição do produto deve ser um(a) string');
   });
-  // TODO Create a photo entity and separate the products
-  test('jtesse the photos field should be a object', async () => {
-    await templatePost(400, { ...product, photos: { file: 'photo.jpeg' } }, 'O campo fotos do produto deve ser um(a) Object');
+  test('jtess the photos field should be a array of photos', async () => {
+    await templatePost(400, { ...product, photos: { file: 'photo.jpeg' } }, 'O campo fotos do produto deve ser um(a) object');
   });
   test('the photos field should be a object', async () => {
-    await templatePost(400, { ...product, photos: 'photo.jpeg' }, 'O campo fotos do produto deve ser um(a) Object');
+    await templatePost(400, { ...product, photos: 'photo.jpeg' }, 'O campo fotos do produto deve ser um(a) object');
   });
 
   // TODO should save photos with others lengths

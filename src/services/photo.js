@@ -19,16 +19,22 @@ module.exports = (app) => {
   );
 
   const save = async (photos, titles) => {
-    const titleList = Object.values(titles).map((title) => title);
+    let titlesArr = [];
+    if (typeof titles === 'string') {
+      titlesArr.push(titles);
+    } else {
+      titlesArr = titles;
+    }
+    if (titlesArr === undefined) throw new ValidationsError('Nenhuma título de foto foi informado');
     if (photos.length === 0) throw new ValidationsError('Nenhuma foto foi selecionada');
-    if (photos.length > titleList.length) throw new ValidationsError(`Foi(Foram) enviada(s) ${photos.length} foto(s) e informado apenas ${titleList.length} título(os)`);
+    if (photos.length > titlesArr.length) throw new ValidationsError(`Foi(Foram) enviada(s) ${photos.length} foto(s) e informado apenas ${titlesArr.length} título(os)`);
     const body = photos.map((photo, index) => {
       const { path, ...newData } = photo;
       const data = {
         ...newData,
         destination: photo.destination.replace('tmp\\', ''),
         url: path.replace('tmp\\', ''),
-        title: titleList[index],
+        title: titlesArr[index],
       };
       return data;
     });
