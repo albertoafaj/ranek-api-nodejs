@@ -10,6 +10,9 @@ exports.up = (knex) => knex.schema.createTable('photos', (t) => {
   t.string('url').notNull();
   t.string('title').notNull();
   t.timestamp('dateCreate', { useTz: true }).notNull().defaultTo(knex.fn.now());
+  t.integer('productId')
+    .references('id')
+    .inTable('products');
 });
 
 exports.down = (knex) => knex.schema.dropTable('photos');

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const multer = require('multer');
-const fs = require('fs');
+// const fs = require('fs');
 const multerConfig = require('../config/multer');
 
 const updload = multer(multerConfig).array('files');
@@ -29,11 +29,13 @@ module.exports = (app) => {
 
   router.delete('/:id', async (req, res, next) => {
     try {
-      const { url } = await app.services.photo.findOne({ id: parseInt(req.params.id, 10) });
-      const result = await app.services.photo.remove({ id: parseInt(req.params.id, 10) });
-      if (result === 1) {
+      /* const { url, productId } = await app.services.photo
+        .findOne({ id: parseInt(req.params.id, 10) }); */
+      /* const result =  */await app.services.photo
+        .remove({ id: parseInt(req.params.id, 10) }/* , productId */);
+      /* if (result === 1) {
         fs.unlink(url, () => { });
-      }
+      } */
       return res.status(204).json();
     } catch (error) {
       return next(error);

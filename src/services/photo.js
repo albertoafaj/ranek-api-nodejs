@@ -71,12 +71,33 @@ module.exports = (app) => {
     return photo;
   };
 
+  const updateProductId = async (products) => {
+    const productsData = products[0];
+    let { photos } = productsData;
+    photos = await photos.map(async (photo) => {
+      const updated = {
+        ...photo,
+        productId: productsData.id,
+      };
+      return app.db('photos').where({ id: photo.id }).update(updated, '*');
+    });
+    photos = await Promise.all(photos).then((data) => data.map((el) => el[0]));
+    productsData.photos = photos;
+    console.log(productsData);
+
+    return productsData;
+  };
+
   const remove = async (id) => {
+    const { url, productId } = await app.services.photo
+      .findOne(id);
+    if (productId !== null) throw new ValidationsError('A foto não pode ser deletada, pois está relacionda a o produto 10011. Acesse o produto para remover');
     const photo = await app.db('photos').where(id).delete();
+    if (photo === 1) { fs.unlink(url, () => { }); }
     return photo;
   };
 
   return {
-    save, findOne, remove,
+    save, findOne, remove, updateProductId,
   };
 };

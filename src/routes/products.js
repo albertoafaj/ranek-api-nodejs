@@ -62,8 +62,9 @@ module.exports = (app) => {
         productFields.photos = await app.services.photo.save(req.files, req.body.photoTitles);
       }
       const { photoTitles, ...saveProduct } = productFields;
-      const result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
-      return res.status(200).json(result[0]);
+      let result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
+      result = await app.services.photo.updateProductId(result);
+      return res.status(200).json(result);
     } catch (error) {
       return next(error);
     }
