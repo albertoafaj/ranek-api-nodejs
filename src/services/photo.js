@@ -1,3 +1,5 @@
+const fs = require('fs');
+const p = require('path');
 const FieldValidator = require('../models/FieldValidator');
 const dataValidator = require('../utils/dataValidator');
 const Photos = require('../models/Photos');
@@ -19,32 +21,49 @@ module.exports = (app) => {
   );
 
   const save = async (photos, titles) => {
-    let titlesArr = [];
-    if (typeof titles === 'string') {
-      titlesArr.push(titles);
-    } else {
-      titlesArr = titles;
+    try {
+      let titlesArr = [];
+      if (typeof titles === 'string') {
+        titlesArr.push(titles);
+      } else {
+        titlesArr = titles;
+      }
+      if (titlesArr === undefined) throw new ValidationsError('Nenhuma título de foto foi informado');
+      if (photos.length === 0) throw new ValidationsError('Nenhuma foto foi selecionada');
+      if (photos.length > titlesArr.length) throw new ValidationsError(`Foi(Foram) enviada(s) ${photos.length} foto(s) e informado apenas ${titlesArr.length} título(os)`);
+      const body = photos.map((photo, index) => {
+        const { path, ...newData } = photo;
+        const data = {
+          ...newData,
+          destination: photo.destination.replace('tmp\\', ''),
+          url: path.replace('tmp\\', ''),
+          title: titlesArr[index],
+        };
+        return data;
+      });
+      let response = [];
+      body.forEach((photo) => {
+        dataValidator(photo, 'foto', photoValidator, false, true, false, true, true);
+        response.push(app.db('photos').insert(photo, '*'));
+      });
+      response = await Promise.all(response).then((data) => data.map((el) => el[0]));
+      photos.forEach((file) => {
+        const tempPath = `${p.resolve(__dirname, '..', '..', 'tmp', 'uploads')}/${file.filename}`;
+        const finalPath = `${p.resolve(__dirname, '..', '..', 'uploads')}/${file.filename}`;
+        fs.rename(tempPath, finalPath, (err) => {
+          if (err) throw new ValidationsError(`Não foi possível salvar o arquivo ${file.originalname}`);
+        });
+      });
+      return response;
+    } catch (error) {
+      const tmpUploads = p.resolve(__dirname, '..', '..', 'tmp', 'uploads');
+      await photos.forEach((file) => {
+        fs.unlink(`${tmpUploads}/${file.filename}`, (err) => {
+          if (err) throw new ValidationsError(`Não foi possível deletar o arquivo ${file.originalname}`);
+        });
+      });
+      throw error;
     }
-    if (titlesArr === undefined) throw new ValidationsError('Nenhuma título de foto foi informado');
-    if (photos.length === 0) throw new ValidationsError('Nenhuma foto foi selecionada');
-    if (photos.length > titlesArr.length) throw new ValidationsError(`Foi(Foram) enviada(s) ${photos.length} foto(s) e informado apenas ${titlesArr.length} título(os)`);
-    const body = photos.map((photo, index) => {
-      const { path, ...newData } = photo;
-      const data = {
-        ...newData,
-        destination: photo.destination.replace('tmp\\', ''),
-        url: path.replace('tmp\\', ''),
-        title: titlesArr[index],
-      };
-      return data;
-    });
-    let response = [];
-    body.forEach((photo) => {
-      dataValidator(photo, 'foto', photoValidator, false, true, false, true, true);
-      response.push(app.db('photos').insert(photo, '*'));
-    });
-    response = await Promise.all(response).then((data) => data.map((el) => el[0]));
-    return response;
   };
 
   const findOne = async (id) => {
