@@ -9,7 +9,7 @@ const updload = multer(multerConfig).array('files');
 module.exports = (app) => {
   const router = Router();
 
-  const addPhotosOnBody = async (body, products, files) => {
+  const addPhotosOnBody = async (body, products, files, method) => {
     const productFields = products;
     Object.entries(body).forEach(([key, value]) => {
       try {
@@ -18,9 +18,12 @@ module.exports = (app) => {
         productFields[key] = value;
       }
     });
-    if (files !== undefined) {
+    if (files !== undefined && method === 'POST') {
       productFields.photos = await app.services.photo
         .save(files, body.photoTitles);
+    } else if (files !== undefined && method === 'PUT') {
+      productFields.photos = await app.services.photo
+        .update(files, body.photoTitles);
     }
     const { photoTitles, ...saveProduct } = productFields;
     return saveProduct;
@@ -68,7 +71,7 @@ module.exports = (app) => {
       const {
         id, dateCreate, dateLastUpdate, sold, photos, ...productFields
       } = product;
-      const saveProduct = await addPhotosOnBody(req.body, productFields, req.files);
+      const saveProduct = await addPhotosOnBody(req.body, productFields, req.files, 'POST');
       let result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
       result = await app.services.photo.updateProductId(result);
       return res.status(200).json(result);
