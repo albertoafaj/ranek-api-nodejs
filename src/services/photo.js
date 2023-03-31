@@ -72,7 +72,7 @@ module.exports = (app) => {
   };
 
   const updateProductId = async (products) => {
-    const productsData = products[0];
+    let productsData = products[0];
     let { photos } = productsData;
     photos = await photos.map(async (photo) => {
       const updated = {
@@ -83,8 +83,9 @@ module.exports = (app) => {
     });
     photos = await Promise.all(photos).then((data) => data.map((el) => el[0]));
     productsData.photos = photos;
-    console.log(productsData);
-
+    delete productsData.dateCreate;
+    delete productsData.dateLastUpdate;
+    productsData = await app.services.product.update(productsData);
     return productsData;
   };
 

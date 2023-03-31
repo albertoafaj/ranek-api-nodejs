@@ -61,6 +61,7 @@ module.exports = (app) => {
     const productData = product;
     dataValidator(product, 'produto', productsValidator, false, true, false, true, true);
     productData.dateLastUpdate = getTimestamp();
+    productData.photos = JSON.stringify(productData.photos);
     const productDB = await findOne({ id: productData.id });
     if (productData.userId !== productDB.userId) throw new WrongResourceError();
     return app.db('products').where({ id: productData.id }).update(productData, '*');
