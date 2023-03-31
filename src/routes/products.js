@@ -9,6 +9,23 @@ const updload = multer(multerConfig).array('files');
 module.exports = (app) => {
   const router = Router();
 
+  const addPhotosOnBody = async (body, products, files) => {
+    const productFields = products;
+    Object.entries(body).forEach(([key, value]) => {
+      try {
+        productFields[key] = JSON.parse(value);
+      } catch (error) {
+        productFields[key] = value;
+      }
+    });
+    if (files !== undefined) {
+      productFields.photos = await app.services.photo
+        .save(files, body.photoTitles);
+    }
+    const { photoTitles, ...saveProduct } = productFields;
+    return saveProduct;
+  };
+
   router.get('/', async (req, res, next) => {
     try {
       let result = [];
@@ -51,17 +68,7 @@ module.exports = (app) => {
       const {
         id, dateCreate, dateLastUpdate, sold, photos, ...productFields
       } = product;
-      Object.entries(req.body).forEach(([key, value]) => {
-        try {
-          productFields[key] = JSON.parse(value);
-        } catch (error) {
-          productFields[key] = value;
-        }
-      });
-      if (req.files !== undefined) {
-        productFields.photos = await app.services.photo.save(req.files, req.body.photoTitles);
-      }
-      const { photoTitles, ...saveProduct } = productFields;
+      const saveProduct = await addPhotosOnBody(req.body, productFields, req.files);
       let result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
       result = await app.services.photo.updateProductId(result);
       return res.status(200).json(result);
