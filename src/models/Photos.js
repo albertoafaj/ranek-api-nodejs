@@ -11,6 +11,7 @@ class Photos {
     url,
     title,
     dateCreate,
+    productId,
   ) {
     this.id = id;
     this.fieldname = fieldname;
@@ -23,6 +24,7 @@ class Photos {
     this.url = url;
     this.title = title;
     this.dateCreate = dateCreate;
+    this.productId = productId;
   }
 }
 

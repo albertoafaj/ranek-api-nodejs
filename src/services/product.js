@@ -51,7 +51,11 @@ module.exports = (app) => {
   const save = async (product) => {
     dataValidator(product, 'produto', productsValidator, false, true, false, true, true);
     const productData = product;
-    if (productData.photos !== null) {
+    if (productData.photos !== undefined) {
+      productData.photos.forEach((photo) => {
+        const { dateCreate, productId, ...data } = photo;
+        dataValidator(data, 'foto', app.services.photo.photoValidator, false, true, false, true, true);
+      });
       productData.photos = JSON.stringify(productData.photos);
     }
     return app.db('products').insert(productData, '*');

@@ -9,7 +9,7 @@ const updload = multer(multerConfig).array('files');
 module.exports = (app) => {
   const router = Router();
 
-  const addPhotosOnBody = async (body, products, files, method) => {
+  const addPhotosOnBody = async (body, products, files) => {
     const productFields = products;
     Object.entries(body).forEach(([key, value]) => {
       try {
@@ -18,13 +18,8 @@ module.exports = (app) => {
         productFields[key] = value;
       }
     });
-    if (files !== undefined && method === 'POST') {
-      productFields.photos = await app.services.photo
-        .save(files, body.photoTitles);
-    } else if (files !== undefined && method === 'PUT') {
-      productFields.photos = await app.services.photo
-        .update(files, body.photoTitles);
-    }
+    productFields.photos = await app.services.photo
+      .save(files, body.photoTitles);
     const { photoTitles, ...saveProduct } = productFields;
     return saveProduct;
   };
@@ -71,20 +66,40 @@ module.exports = (app) => {
       const {
         id, dateCreate, dateLastUpdate, sold, photos, ...productFields
       } = product;
-      const saveProduct = await addPhotosOnBody(req.body, productFields, req.files, 'POST');
-      let result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
-      result = await app.services.photo.updateProductId(result);
+      let result;
+      if (req.files === undefined) {
+        [result] = await app.services.product.save({ ...req.body, userId: req.user.id });
+      } else {
+        const saveProduct = await addPhotosOnBody(req.body, productFields, req.files);
+        result = await app.services.product.save({ ...saveProduct, userId: req.user.id });
+        result = await app.services.photo.updateProductId(result);
+      }
       return res.status(200).json(result);
     } catch (error) {
       return next(error);
     }
   });
 
-  router.put('/:id', async (req, res, next) => {
+  router.put('/:id', updload, async (req, res, next) => {
     try {
-      const result = await app.services.product.update({
-        ...req.body, id: parseInt(req.params.id, 10), userId: req.user.id,
-      });
+      let result;
+      if (req.files === undefined) {
+        result = await app.services.product.update({
+          ...req.body, id: parseInt(req.params.id, 10), userId: req.user.id,
+        });
+      } else {
+        let { photos } = await app.services.product.findOne({ id: parseInt(req.params.id, 10) });
+        const updateProduct = await addPhotosOnBody(req.body, {}, req.files);
+        updateProduct.photos.forEach((photo) => {
+          if (photos === null) { photos = []; }
+          photos.push(photo);
+        });
+        updateProduct.photos = photos;
+        result = await app.services.product.update({
+          ...updateProduct, id: parseInt(req.params.id, 10), userId: req.user.id,
+        });
+        result = await app.services.photo.updateProductId(result);
+      }
       return res.status(200).json(result[0]);
     } catch (error) {
       return next(error);

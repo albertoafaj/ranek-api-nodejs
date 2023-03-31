@@ -22,7 +22,6 @@ const validation = (
   let dataLength = 0;
   Object.entries(data).forEach(([key, value]) => {
     if (key) dataLength += 1;
-
     const dataFields = getDataFields(key, validator);
     if (checkIsNull && value === null) throw new ValidationError(`O campo ${dataFields.translationToPt} é um atributo obrigatório`);
     const fieldLength = value.toString().length;

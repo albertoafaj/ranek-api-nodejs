@@ -18,6 +18,7 @@ module.exports = (app) => {
     { ...new FieldValidator('url da foto', 0, 255, 'string', false, false, true) },
     { ...new FieldValidator('title da foto', 0, 255, 'string', false, false, true) },
     { ...new FieldValidator('data de criação do produto', 0, 255, 'string', false, true, true) },
+    { ...new FieldValidator('produto Id da foto', 0, 255, 'number', false, false, true) },
   );
 
   const save = async (photos, titles) => {
@@ -99,6 +100,6 @@ module.exports = (app) => {
   };
 
   return {
-    save, findOne, remove, updateProductId,
+    save, findOne, remove, updateProductId, photoValidator,
   };
 };
