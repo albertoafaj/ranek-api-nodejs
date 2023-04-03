@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Products = require('../models/Products');
 const FieldValidator = require('../models/FieldValidator');
 const dataValidator = require('../utils/dataValidator');
@@ -75,6 +76,12 @@ module.exports = (app) => {
     const productDB = await findOne({ id });
     if (transaction) throw new ValidationsError('Essa produto possui transações associadas');
     if (userId !== productDB.userId) throw new WrongResourceError();
+    if (productDB.photos !== null) {
+      productDB.photos.forEach(async (photo) => {
+        const photoRemove = await app.db('photos').where({ id: photo.id }).delete();
+        if (photoRemove === 1) { fs.unlink(photo.url, () => { }); }
+      });
+    }
     return app.db('products').where({ id }).delete();
   };
   return {

@@ -235,7 +235,7 @@ describe('when try update products', () => {
 });
 
 describe('when try delete a product', () => {
-  test('should remove a product', async () => {
+  test('jtesse should remove a product', async () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10009`)
       .set('authorization', `bearer ${TOKEN}`);
@@ -254,5 +254,11 @@ describe('when try delete a product', () => {
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('Essa produto possui transações associadas');
+  });
+  test('should remove all photos related to it', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/10011`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(204);
   });
 });
