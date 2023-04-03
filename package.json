@@ -17,7 +17,9 @@
     }
   },
   "scripts": {
-    "test": "jest --coverage --runInBand --forceExit",
+    "start": "set NODE_ENV=prod&& node src/server.js",
+    "test": "set NODE_ENV=test&& node src/server.js",
+    "coverage": "set NODE_ENV=test&& jest --coverage --runInBand --forceExit",
     "lint": "eslint src/** test/** --fix",
     "secure-mode": "set NODE_ENV=test&& jest --runInBand --watch --verbose=true"
   },
