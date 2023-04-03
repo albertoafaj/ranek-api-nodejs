@@ -16,7 +16,7 @@ class Products {
     this.price = price;
     this.sold = sold;
     this.description = description;
-    this.photos = photos;
+    this.photos = photos || null;
     this.dateCreate = dateCreate;
     this.dateLastUpdate = dateLastUpdate;
   }

@@ -24,12 +24,12 @@ describe('Whe try get products', () => {
       .get(`${MAIN_ROUTE}/${urlQuery}`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(status);
-    if (result.error) expect(result.error.message).toBe(errorMsg);
+    if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
   };
   test('should list all products', async () => {
     const result = await templateGet('', 200, '');
-    expect(result.body.length).toBe(11);
+    expect(result.body.length).toBe(12);
   });
   test('should list by id', async () => {
     const result = await templateGet(10000, 200, '');
@@ -56,14 +56,17 @@ describe('Whe try get products', () => {
   });
   test('should divide the query into 9 products per page if the limit is not informed', async () => {
     const result = await templateGet('?page=2', 200, '');
-    expect(result.body).toHaveLength(2);
+    expect(result.body).toHaveLength(3);
     expect(result.body[0].id).toBe(10009);
   });
 
   test('should return in header field x-total-count', async () => {
     const result = await templateGet('?page=2&limit=2', 200, '');
     expect(result.header).toHaveProperty('x-total-count');
-    expect(result.header['x-total-count']).toBe('11');
+    expect(result.header['x-total-count']).toBe('12');
+  });
+  test('should return product not found message', async () => {
+    await templateGet('99999', 400, 'Produto não encontrado');
   });
 });
 
@@ -112,19 +115,58 @@ describe('Whe try salve products', () => {
   test('the description field should be a string', async () => {
     await templatePost(400, { ...product, description: true }, 'O campo descrição do produto deve ser um(a) string');
   });
-  // TODO Create a photo entity and separate the products
-  test('the photos field should be a binary', async () => {
-    await templatePost(400, { ...product, photos: { file: 'products photos' } }, 'O campo fotos do produto deve ser um(a) Object');
+  test('the photos field should be a object', async () => {
+    await templatePost(400, { ...product, photos: 'photo.jpeg' }, 'O campo fotos do produto deve ser um(a) object');
   });
-  // TODO should save photos with others lengths
-  test('the name field should not have values smaller or larger than the preset', async () => {
-    await templatePost(400, { ...product, name: stringGenaretor(266) }, 'O campo nome do produto deve ter de 0 a 255 caracteres');
+});
+
+describe('Whe try salve products with photo', () => {
+  const templatePost = async (status, body, errorMsg) => {
+    const result = await request(app)
+      .post(MAIN_ROUTE)
+      .set('authorization', `bearer ${TOKEN}`)
+      .send(body);
+    expect(result.status).toBe(status);
+    if (result.error) expect(result.body.error).toBe(errorMsg);
+    return result;
+  };
+  const product = {
+    name: 'Phone de Ouvido - Salvar',
+    price: 199.99,
+    description: 'Phone de Ouvido - Teste salvar produtos',
+    photos: [
+      {
+        id: 10001,
+        fieldname: 'files',
+        originalname: 'img-project-portfolio-360x280.jpg',
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+        destination: 'D:\\Projects\\Pratical-studies\\ranek-api\\uploads',
+        filename: 'not-remove-img-project-portfolio-360x280.jpg',
+        url: 'D:\\Projects\\Pratical-studies\\ranek-api\\uploads\\not-remove-img-project-portfolio-360x280.jpg',
+        size: 6731,
+        title: 'Screen portfolio 2',
+        dateCreate: '2023-03-30T11:16:17.307Z',
+        productId: 10011,
+      },
+    ],
+  };
+  test('should return status 200', async () => {
+    const result = await templatePost(200, product, '');
+    expect(result.body.photos[0]).toHaveProperty('id');
+    expect(result.body.photos[0]).toHaveProperty('fieldname');
+    expect(result.body.photos[0]).toHaveProperty('originalname');
+    expect(result.body.photos[0]).toHaveProperty('mimetype');
+    expect(result.body.photos[0]).toHaveProperty('destination');
+    expect(result.body.photos[0]).toHaveProperty('filename');
+    expect(result.body.photos[0]).toHaveProperty('url');
+    expect(result.body.photos[0]).toHaveProperty('size');
+    expect(result.body.photos[0]).toHaveProperty('title');
+    expect(result.body.photos[0]).toHaveProperty('dateCreate');
+    expect(result.body.photos[0]).toHaveProperty('productId');
   });
-  test('the description field should not have values smaller than the preset', async () => {
-    await templatePost(400, { ...product, description: stringGenaretor(15) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres');
-  });
-  test('the description field should not have values larger than the preset', async () => {
-    await templatePost(400, { ...product, description: stringGenaretor(266) }, 'O campo descrição do produto deve ter de 16 a 255 caracteres');
+  test('the name fieldname should not be null', async () => {
+    await templatePost(400, { ...product, photos: [{ ...product.photos[0], fieldname: null }] }, 'O campo fieldname da foto é um atributo obrigatório');
   });
 });
 
@@ -202,6 +244,13 @@ describe('when try delete a product', () => {
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(204);
   });
+  test('should remove a product', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/99999`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe('Produto não encontrado');
+  });
   test('should not remove a product from another user', async () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10007`)
@@ -215,5 +264,11 @@ describe('when try delete a product', () => {
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('Essa produto possui transações associadas');
+  });
+  test('should remove all photos related to it', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/10011`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(204);
   });
 });

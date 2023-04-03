@@ -3,8 +3,21 @@
   "version": "1.0.0",
   "description": "API Rest Ranek in Node",
   "main": "index.js",
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      },
+      "./src/services": {
+        "lines": 100
+      }
+    }
+  },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --runInBand --forceExit",
     "lint": "eslint src/** test/** --fix",
     "secure-mode": "set NODE_ENV=test&& jest --runInBand --watch --verbose=true"
   },
@@ -26,6 +39,7 @@
     "express": "^4.18.2",
     "jwt-simple": "^0.5.6",
     "knex": "^2.4.2",
+    "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.9.0",

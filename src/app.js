@@ -2,7 +2,6 @@ const app = require('express')();
 const consign = require('consign');
 const knex = require('knex');
 const knexfile = require('../knexfile');
-/* const { query } = require('express'); */
 
 // TODO create dinamic keys;
 
