@@ -22,6 +22,7 @@ module.exports = (app) => {
   const findOne = async (filter) => {
     dataValidator(filter, 'produto', productsValidator, false, true, false, true, true);
     const result = await app.db('products').where(filter).first();
+    if (result === undefined) throw new ValidationsError('Produto não encontrado');
     return result;
   };
   const findAll = (filter) => app.db('products').where(filter).select();
@@ -74,6 +75,7 @@ module.exports = (app) => {
   const remove = async (id, userId) => {
     const transaction = await app.services.transaction.findOne({ productId: id });
     const productDB = await findOne({ id });
+    if (productDB === undefined) throw new ValidationsError('Produto não encontrado');
     if (transaction) throw new ValidationsError('Essa produto possui transações associadas');
     if (userId !== productDB.userId) throw new WrongResourceError();
     if (productDB.photos !== null) {

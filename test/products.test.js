@@ -24,7 +24,7 @@ describe('Whe try get products', () => {
       .get(`${MAIN_ROUTE}/${urlQuery}`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(status);
-    if (result.error) expect(result.error.message).toBe(errorMsg);
+    if (result.error) expect(result.body.error).toBe(errorMsg);
     return result;
   };
   test('should list all products', async () => {
@@ -64,6 +64,9 @@ describe('Whe try get products', () => {
     const result = await templateGet('?page=2&limit=2', 200, '');
     expect(result.header).toHaveProperty('x-total-count');
     expect(result.header['x-total-count']).toBe('12');
+  });
+  test('should return product not found message', async () => {
+    await templateGet('99999', 400, 'Produto não encontrado');
   });
 });
 
@@ -235,11 +238,18 @@ describe('when try update products', () => {
 });
 
 describe('when try delete a product', () => {
-  test('jtesse should remove a product', async () => {
+  test('should remove a product', async () => {
     const result = await request(app)
       .delete(`${MAIN_ROUTE}/10009`)
       .set('authorization', `bearer ${TOKEN}`);
     expect(result.status).toBe(204);
+  });
+  test('should remove a product', async () => {
+    const result = await request(app)
+      .delete(`${MAIN_ROUTE}/99999`)
+      .set('authorization', `bearer ${TOKEN}`);
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe('Produto não encontrado');
   });
   test('should not remove a product from another user', async () => {
     const result = await request(app)
