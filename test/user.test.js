@@ -7,14 +7,14 @@ const MAIN_ROTE = '/v1/users';
 let user;
 
 beforeAll(async () => {
-  await app.db('products').del();
-  await app.db('users').del();
-  const result = await app.services.user.save({
-    email: `${Date.now()}@ranek.com`,
+  await app.db.migrate.rollback();
+  await app.db.migrate.latest();
+  await app.db.seed.run();
+  user = {
+    id: 10002,
+    email: 'main_user@ranek.com',
     password: '123456',
-  });
-  user = { ...result[0] };
-  user.password = '123456';
+  };
   user.token = jwt.encode({ id: user.id, email: user.email }, process.env.JWTSEC);
 });
 
@@ -210,7 +210,7 @@ describe('when try to update the fields to incorrect type', () => {
 describe('when trying to update fields to values less than or greater than the preset', () => {
   const stringGenaretor = (length) => {
     const arr = [];
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i += 1) {
       arr.push('A');
     }
     return arr.reduce((acc, cur) => acc + cur);

@@ -2,6 +2,9 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const getTimestamp = require('../utils/getTimeStamp');
 const ValidationError = require('../err/ValidationsError');
+const Users = require('../models/Users');
+const FieldValidator = require('../models/FieldValidator');
+const dataValidator = require('../utils/dataValidator');
 
 module.exports = (app) => {
   const getPasswordHash = (password) => {
@@ -9,75 +12,25 @@ module.exports = (app) => {
     return bcrypt.hashSync(password, salt);
   };
 
-  function Fields(
-    translationToPt,
-    minFieldLength,
-    maxFieldLength,
-    fieldType,
-    isUnique,
-    insertAtLogin,
-    returnValue,
-  ) {
-    this.translationToPt = translationToPt;
-    this.minFieldLength = minFieldLength;
-    this.maxFieldLength = maxFieldLength;
-    this.fieldType = fieldType;
-    this.isUnique = isUnique;
-    this.insertAtLogin = insertAtLogin;
-    this.returnValue = returnValue;
-  }
-
-  class Users {
-    constructor(
-      id,
-      name,
-      email,
-      password,
-      zipCode,
-      street,
-      number,
-      city,
-      state,
-      district,
-      status,
-      dateCreate,
-      dateLastUpdate,
-    ) {
-      this.id = { ...new Fields(...id) };
-      this.name = { ...new Fields(...name) };
-      this.email = { ...new Fields(...email) };
-      this.password = { ...new Fields(...password) };
-      this.zipCode = { ...new Fields(...zipCode) };
-      this.street = { ...new Fields(...street) };
-      this.number = { ...new Fields(...number) };
-      this.city = { ...new Fields(...city) };
-      this.state = { ...new Fields(...state) };
-      this.district = { ...new Fields(...district) };
-      this.status = { ...new Fields(...status) };
-      this.dateCreate = { ...new Fields(...dateCreate) };
-      this.dateLastUpdate = { ...new Fields(...dateLastUpdate) };
-    }
-  }
-
-  const users = new Users(
-    ['id', 0, 2147483647, 'number', true, true, true],
-    ['nome', 0, 255, 'string', false, false, true],
-    ['email', 0, 255, 'string', true, true, true],
-    ['senha', 6, 255, 'string', false, true, false],
-    ['código postal', 8, 8, 'number', false, false, true],
-    ['rua', 0, 255, 'string', false, false, true],
-    ['número', 0, 8, 'string', false, false, true],
-    ['cidade', 0, 50, 'string', false, false, true],
-    ['estado', 2, 2, 'string', false, false, true],
-    ['bairro', 0, 50, 'string', false, false, true],
-    ['status', 0, 5, 'boolean', false, true, true],
-    ['data de criação', 0, 255, 'string', false, true, true],
-    ['data de atualização', 0, 255, 'string', false, false, true],
+  const usersValidator = new Users(
+    { ...new FieldValidator('id', 0, 2147483647, 'number', true, true, true) },
+    { ...new FieldValidator('nome', 0, 255, 'string', false, false, true) },
+    { ...new FieldValidator('email', 0, 255, 'string', true, true, true) },
+    { ...new FieldValidator('senha', 6, 255, 'string', false, true, false) },
+    { ...new FieldValidator('código postal', 8, 8, 'number', false, false, true) },
+    { ...new FieldValidator('rua', 0, 255, 'string', false, false, true) },
+    { ...new FieldValidator('número', 0, 8, 'string', false, false, true) },
+    { ...new FieldValidator('cidade', 0, 50, 'string', false, false, true) },
+    { ...new FieldValidator('estado', 2, 2, 'string', false, false, true) },
+    { ...new FieldValidator('bairro', 0, 50, 'string', false, false, true) },
+    { ...new FieldValidator('status', 0, 5, 'boolean', false, true, true) },
+    { ...new FieldValidator('data de criação', 0, 255, 'string', false, true, true) },
+    { ...new FieldValidator('data de atualização', 0, 255, 'string', false, false, true) },
   );
 
   const getUserFields = (field) => {
     let fieldValue;
-    Object.entries(users).filter(([key, value]) => {
+    Object.entries(usersValidator).filter(([key, value]) => {
       if (key === field) { fieldValue = value; }
       return value;
     });
@@ -86,7 +39,7 @@ module.exports = (app) => {
 
   const getUserProps = (propField, valueField) => {
     const arr = [];
-    Object.entries(users).filter(([key, value]) => {
+    Object.entries(usersValidator).filter(([key, value]) => {
       const prop = key;
       Object.entries(value).forEach(([key2, value2]) => {
         if (key2 === propField && value2 === valueField) arr.push(prop);
@@ -142,7 +95,9 @@ module.exports = (app) => {
     if (!userData.password) throw new ValidationError('O campo senha é um atributo obrigatório');
     const userDB = await findOne(user);
     if (userDB) throw new ValidationError('Já existe um usuário com este email');
-    validation(user, true, true, false, true, false);
+    // TODO Refactor to use dataValidator component rather the validation method
+    dataValidator(user, 'usuário', usersValidator, true, true, false, true, false);
+    // validation(user, true, true, false, true, false);
     userData.password = getPasswordHash(userData.password);
     return app.db('users').insert(userData, getUserProps('returnValue', true));
   };

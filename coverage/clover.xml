@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1680526181956" clover="3.2.0">
+  <project timestamp="1680526181956" name="All files">
+    <metrics statements="671" coveredstatements="590" conditionals="175" coveredconditionals="141" methods="133" coveredmethods="112" elements="979" coveredelements="843" complexity="0" loc="671" ncloc="671" packages="10" files="37" classes="37"/>
+    <package name="ranek-api">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="knexfile.js" path="D:\Projects\Pratical-studies\ranek-api\knexfile.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src">
+      <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <file name="app.js" path="D:\Projects\Pratical-studies\ranek-api\src\app.js">
+        <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="121" type="stmt"/>
+        <line num="24" count="121" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="121" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="119" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.config">
+      <metrics statements="44" coveredstatements="33" conditionals="6" coveredconditionals="1" methods="9" coveredmethods="5"/>
+      <file name="middlewares.js" path="D:\Projects\Pratical-studies\ranek-api\src\config\middlewares.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+      </file>
+      <file name="multer.js" path="D:\Projects\Pratical-studies\ranek-api\src\config\multer.js">
+        <metrics statements="14" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+      </file>
+      <file name="passport.js" path="D:\Projects\Pratical-studies\ranek-api\src\config\passport.js">
+        <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="145" type="stmt"/>
+        <line num="17" count="145" type="stmt"/>
+        <line num="18" count="145" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+      </file>
+      <file name="routes.js" path="D:\Projects\Pratical-studies\ranek-api\src\config\routes.js">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.err">
+      <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="ValidationsError.js" path="D:\Projects\Pratical-studies\ranek-api\src\err\ValidationsError.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="119" type="stmt"/>
+        <line num="3" count="119" type="stmt"/>
+      </file>
+      <file name="WrongResourceError.js" path="D:\Projects\Pratical-studies\ranek-api\src\err\WrongResourceError.js">
+        <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="cond" truecount="1" falsecount="0"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.migrations">
+      <metrics statements="59" coveredstatements="59" conditionals="0" coveredconditionals="0" methods="15" coveredmethods="15"/>
+      <file name="20230204132021_create_table_users.js" path="D:\Projects\Pratical-studies\ranek-api\src\migrations\20230204132021_create_table_users.js">
+        <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
+      </file>
+      <file name="20230228085359_create_tabela_product.js" path="D:\Projects\Pratical-studies\ranek-api\src\migrations\20230228085359_create_tabela_product.js">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+      </file>
+      <file name="20230314111403_create_tabela_addresses.js" path="D:\Projects\Pratical-studies\ranek-api\src\migrations\20230314111403_create_tabela_addresses.js">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+      </file>
+      <file name="20230314122224_create_tabela_transactions.js" path="D:\Projects\Pratical-studies\ranek-api\src\migrations\20230314122224_create_tabela_transactions.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+      </file>
+      <file name="20230321115911_create_tabela_photos.js" path="D:\Projects\Pratical-studies\ranek-api\src\migrations\20230321115911_create_tabela_photos.js">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="18" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.models">
+      <metrics statements="62" coveredstatements="62" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="6"/>
+      <file name="Addresses.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\Addresses.js">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+      </file>
+      <file name="FieldValidator.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\FieldValidator.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="11" count="343" type="stmt"/>
+        <line num="12" count="343" type="stmt"/>
+        <line num="13" count="343" type="stmt"/>
+        <line num="14" count="343" type="stmt"/>
+        <line num="15" count="343" type="stmt"/>
+        <line num="16" count="343" type="stmt"/>
+        <line num="17" count="343" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+      </file>
+      <file name="Photos.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\Photos.js">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="16" count="7" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+      </file>
+      <file name="Products.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\Products.js">
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="13" count="17" type="stmt"/>
+        <line num="14" count="17" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="16" count="17" type="stmt"/>
+        <line num="17" count="17" type="stmt"/>
+        <line num="18" count="17" type="stmt"/>
+        <line num="19" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="17" type="stmt"/>
+        <line num="21" count="17" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+      </file>
+      <file name="Transactions.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\Transactions.js">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+      </file>
+      <file name="Users.js" path="D:\Projects\Pratical-studies\ranek-api\src\models\Users.js">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+        <line num="33" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.routes">
+      <metrics statements="208" coveredstatements="178" conditionals="38" coveredconditionals="31" methods="32" coveredmethods="28"/>
+      <file name="addresses.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\addresses.js">
+        <metrics statements="24" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="19" type="stmt"/>
+        <line num="17" count="19" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="18" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="19" type="stmt"/>
+        <line num="26" count="19" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="18" type="stmt"/>
+        <line num="34" count="7" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="7" type="stmt"/>
+      </file>
+      <file name="auth.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\auth.js">
+        <metrics statements="24" coveredstatements="23" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="7" type="stmt"/>
+      </file>
+      <file name="photos.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\photos.js">
+        <metrics statements="22" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="45" count="7" type="stmt"/>
+      </file>
+      <file name="products.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\products.js">
+        <metrics statements="71" coveredstatements="51" conditionals="22" coveredconditionals="18" methods="9" coveredmethods="6"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+        <line num="34" count="7" type="stmt"/>
+        <line num="35" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="37" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="4" type="stmt"/>
+        <line num="47" count="7" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="54" count="7" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="63" count="7" type="stmt"/>
+        <line num="64" count="10" type="stmt"/>
+        <line num="65" count="10" type="stmt"/>
+        <line num="68" count="10" type="stmt"/>
+        <line num="70" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="71" count="10" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="79" count="8" type="stmt"/>
+        <line num="83" count="7" type="stmt"/>
+        <line num="84" count="13" type="stmt"/>
+        <line num="86" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="87" count="13" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="105" count="12" type="stmt"/>
+        <line num="109" count="7" type="stmt"/>
+        <line num="110" count="5" type="stmt"/>
+        <line num="111" count="5" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="118" count="7" type="stmt"/>
+      </file>
+      <file name="transactions.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\transactions.js">
+        <metrics statements="47" coveredstatements="45" conditionals="8" coveredconditionals="6" methods="7" coveredmethods="7"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="6" type="stmt"/>
+        <line num="40" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="5" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="48" count="5" type="stmt"/>
+        <line num="52" count="7" type="stmt"/>
+        <line num="53" count="5" type="stmt"/>
+        <line num="54" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="4" type="stmt"/>
+        <line num="58" count="4" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
+        <line num="60" count="2" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="4" type="stmt"/>
+        <line num="70" count="7" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="80" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="87" count="7" type="stmt"/>
+      </file>
+      <file name="users.js" path="D:\Projects\Pratical-studies\ranek-api\src\routes\users.js">
+        <metrics statements="20" coveredstatements="19" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="16" count="17" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="20" count="15" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="33" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="29" count="31" type="stmt"/>
+        <line num="33" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.seeds">
+      <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="00_users.js" path="D:\Projects\Pratical-studies\ranek-api\src\seeds\00_users.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+      </file>
+      <file name="01_products.js" path="D:\Projects\Pratical-studies\ranek-api\src\seeds\01_products.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="101" count="6" type="stmt"/>
+        <line num="114" count="6" type="stmt"/>
+      </file>
+      <file name="02_addresses.js" path="D:\Projects\Pratical-studies\ranek-api\src\seeds\02_addresses.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+      </file>
+      <file name="03_transactons.js" path="D:\Projects\Pratical-studies\ranek-api\src\seeds\03_transactons.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+      </file>
+      <file name="04_photos.js" path="D:\Projects\Pratical-studies\ranek-api\src\seeds\04_photos.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.services">
+      <metrics statements="220" coveredstatements="181" conditionals="84" coveredconditionals="66" methods="56" coveredmethods="43"/>
+      <file name="address.js" path="D:\Projects\Pratical-studies\ranek-api\src\services\address.js">
+        <metrics statements="23" coveredstatements="23" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="26" count="24" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="31" count="23" type="stmt"/>
+        <line num="32" count="23" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="41" count="7" type="stmt"/>
+      </file>
+      <file name="photo.js" path="D:\Projects\Pratical-studies\ranek-api\src\services\photo.js">
+        <metrics statements="59" coveredstatements="20" conditionals="16" coveredconditionals="3" methods="17" coveredmethods="4"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="70" count="7" type="stmt"/>
+        <line num="71" count="3" type="stmt"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="75" count="7" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="93" count="7" type="stmt"/>
+        <line num="94" count="2" type="stmt"/>
+        <line num="96" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="98" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="102" count="7" type="stmt"/>
+      </file>
+      <file name="product.js" path="D:\Projects\Pratical-studies\ranek-api\src\services\product.js">
+        <metrics statements="58" coveredstatements="58" conditionals="18" coveredconditionals="15" methods="16" coveredmethods="16"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="18" type="stmt"/>
+        <line num="24" count="14" type="stmt"/>
+        <line num="25" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="4" type="stmt"/>
+        <line num="45" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="53" count="7" type="stmt"/>
+        <line num="54" count="10" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+        <line num="66" count="7" type="stmt"/>
+        <line num="67" count="13" type="stmt"/>
+        <line num="68" count="13" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="72" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="75" count="7" type="stmt"/>
+        <line num="76" count="5" type="stmt"/>
+        <line num="77" count="5" type="stmt"/>
+        <line num="78" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="79" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="81" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="89" count="7" type="stmt"/>
+      </file>
+      <file name="transaction.js" path="D:\Projects\Pratical-studies\ranek-api\src\services\transaction.js">
+        <metrics statements="22" coveredstatements="22" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="19" count="11" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="7" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+      </file>
+      <file name="user.js" path="D:\Projects\Pratical-studies\ranek-api\src\services\user.js">
+        <metrics statements="58" coveredstatements="58" conditionals="44" coveredconditionals="42" methods="13" coveredmethods="13"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+        <line num="33" count="40" type="stmt"/>
+        <line num="34" count="520" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="520" type="stmt"/>
+        <line num="37" count="40" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+        <line num="41" count="8" type="stmt"/>
+        <line num="42" count="8" type="stmt"/>
+        <line num="43" count="104" type="stmt"/>
+        <line num="44" count="104" type="stmt"/>
+        <line num="45" count="728" type="cond" truecount="4" falsecount="0"/>
+        <line num="46" count="728" type="stmt"/>
+        <line num="48" count="104" type="stmt"/>
+        <line num="50" count="8" type="stmt"/>
+        <line num="55" count="7" type="stmt"/>
+        <line num="63" count="33" type="stmt"/>
+        <line num="64" count="40" type="stmt"/>
+        <line num="65" count="40" type="cond" truecount="4" falsecount="0"/>
+        <line num="66" count="28" type="stmt"/>
+        <line num="67" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="71" count="26" type="cond" truecount="2" falsecount="2"/>
+        <line num="72" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="75" count="10" type="stmt"/>
+        <line num="76" count="16" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="2" type="stmt"/>
+        <line num="81" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="84" count="5" type="stmt"/>
+        <line num="88" count="7" type="stmt"/>
+        <line num="90" count="168" type="stmt"/>
+        <line num="92" count="7" type="stmt"/>
+        <line num="93" count="20" type="stmt"/>
+        <line num="94" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="95" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="17" type="stmt"/>
+        <line num="97" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="99" count="16" type="stmt"/>
+        <line num="101" count="5" type="stmt"/>
+        <line num="102" count="5" type="stmt"/>
+        <line num="105" count="7" type="stmt"/>
+        <line num="106" count="33" type="stmt"/>
+        <line num="107" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="108" count="33" type="stmt"/>
+        <line num="109" count="2" type="stmt"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="112" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="ranek-api.src.utils">
+      <metrics statements="36" coveredstatements="35" conditionals="40" coveredconditionals="36" methods="6" coveredmethods="6"/>
+      <file name="dataValidator.js" path="D:\Projects\Pratical-studies\ranek-api\src\utils\dataValidator.js">
+        <metrics statements="24" coveredstatements="23" conditionals="36" coveredconditionals="33" methods="4" coveredmethods="4"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="344" type="stmt"/>
+        <line num="6" count="3250" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="3250" type="stmt"/>
+        <line num="9" count="344" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="22" count="110" type="stmt"/>
+        <line num="23" count="110" type="stmt"/>
+        <line num="24" count="344" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="344" type="stmt"/>
+        <line num="26" count="344" type="cond" truecount="4" falsecount="0"/>
+        <line num="27" count="322" type="stmt"/>
+        <line num="28" count="322" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="322" type="cond" truecount="4" falsecount="0"/>
+        <line num="33" count="313" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="24" type="stmt"/>
+        <line num="37" count="289" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="285" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="11" type="stmt"/>
+        <line num="47" count="40" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="7" type="stmt"/>
+      </file>
+      <file name="getTimeStamp.js" path="D:\Projects\Pratical-studies\ranek-api\src\utils\getTimeStamp.js">
+        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="10" type="stmt"/>
+        <line num="3" count="50" type="cond" truecount="2" falsecount="0"/>
+        <line num="4" count="10" type="stmt"/>
+        <line num="5" count="10" type="stmt"/>
+        <line num="6" count="10" type="stmt"/>
+        <line num="7" count="10" type="stmt"/>
+        <line num="8" count="10" type="stmt"/>
+        <line num="9" count="10" type="stmt"/>
+        <line num="10" count="10" type="stmt"/>
+        <line num="11" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="7" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

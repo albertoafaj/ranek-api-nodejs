@@ -1,0 +1,8 @@
+{
+ "id": "759ec04c-de35-4d0f-9850-f9089e54461d",
+ "level": "error",
+ "message": "Cannot destructure property 'url' of '(intermediate value)' as it is undefined.",
+ "name": "TypeError",
+ "stack": "TypeError: Cannot destructure property 'url' of '(intermediate value)' as it is undefined.\n    at Object.remove (D:\\Projects\\Pratical-studies\\ranek-api\\src\\services\\photo.js:94:13)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async D:\\Projects\\Pratical-studies\\ranek-api\\src\\routes\\photos.js:34:28",
+ "timestamp": "2023-04-03T13:47:11.417Z"
+}

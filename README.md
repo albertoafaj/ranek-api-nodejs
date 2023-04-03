@@ -1,18 +1,39 @@
-# :construction: Em desenvolvimento :construction:- RANEK API Rest com NodeJs
+# RANEK - API Rest com NodeJs
 
-API REST para o e-commerce fictício Ranek.
+Uma API REST para potencializar a sua experiência de compra no site fictício RANEK.
 
 ## Descrição do projeto: 
 
-API Rest utilizando NodeJS / Express, o Jest para dar para a aplicação a segurança dos testes, o Postgresql como database.
+A API REST Ranek é uma plataforma desenvolvida em NodeJS e Express para aprimorar a experiência de compra no site fictício RANEK. Utiliza Jest para testes automatizados e Postgresql como banco de dados principal. 
 
 ## Funcionalidades do projeto
 
-* `Funcionalidade 1`: Cadastrar e buscar usuários;
-* `Funcionalidade 2`: Em desenvolvimento;
-* `Funcionalidade 3`: Em desenvolvimento;
-* `Funcionalidade 4`: Em desenvolvimento;
-
+| MÉTODO HTTP | ROTA | FUNCIONALIDADE |
+|--- |--- |--- |
+| POST | /auth/signup | Cadastrar usuários |
+| POST | /auth/signin | Obter token de autenticação |
+| GET | /v1/users | Buscar todos os usuários  |
+| PUT | /v1/users:id | Atualizar usuários por Id do produto |
+| GET | /v1/products | Buscar todos os produtos |
+| GET | /v1/products:id | Buscar produto por Id |
+| GET | /v1/products?userId= | Buscar produto por Id do usuário |
+| GET | /v1/products?keywors= | Buscar produto por palavra-chave |
+| GET | /v1/products?limit= | Limitar numero de produtos por requisição |
+| GET | /v1/products?page= | Paginar lista de produtos buscados |
+| POST | /v1/products | Salvar produto |
+| PUT | /v1/products:Id | Atualizar produto por Id |
+| DELETE | /v1/products:Id | Atualizar produto por Id |
+| GET | /v1/address:Id | Buscar endereço por Id |
+| POST | /v1/address | Salvar endereço |
+| PUT | /v1/address:Id | Atualizar endereço por Id |
+| DELETE | /v1/address:Id | Atualizar endereço por Id |
+| GET | /v1/photos:Id | Buscar fotos por Id |
+| POST | /v1/photos | Salvar fotos |
+| DELETE | /v1/photos:Id | Atualizar fotos por Id |
+| GET | /v1/transactions:Id | Buscar transações por Id |
+| POST | /v1/transactions | Salvar transações |
+| PUT | /v1/transactions:Id | Atualizar transações por Id |
+| DELETE | /v1/transactions:Id | Atualizar transações por Id |
 ## Site do projeto:
 
 ## Instação:
@@ -57,26 +78,6 @@ $ npm start
 ```
 $ npm run test
 ```
-
-#### Utilizando a API (Alguns exemplos de uso)
-
-
-1) consulta lista de usuários
-   HTTP: GET /v1/users
-   AUTH: Bearer Token
-   RESPONSE EXAMPLE: [{ 
-      "id": 1,
-      "name": "Ranek",
-      "email": "ranek@ranek.com",
-      "password": "123456",
-      "street": "Rua Ali perto",
-      "number": "1200",
-      "city": "Camaçari",
-      "state": "BA",
-      "zipCode": "12345678",
-      "district": "Arembepe"
-    }]
-
 
 ## Tecnologias utilizadas
 
